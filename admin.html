@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: https:; connect-src https://bd-web-maker-default-rtdb.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Admin – Web Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a12;--card:#10172a;--ink:#0b101d;--gold:#d9b46a;--gold2:#f3dca3;--t:#f3efe6;--m:#98a0b3;--b:#232c44;--ok:#3fb768;--bad:#ff6b6b;--warn:#e9b949;--v:#8d7bff;--tg:#0088cc;--wa:#25d366}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{background:var(--bg);color:var(--t);padding:16px;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(40% 40% at 10% 0,rgba(217,180,106,.14),transparent),radial-gradient(40% 40% at 100% 100%,rgba(141,123,255,.12),transparent)}
+.hide{display:none!important}.wrap{max-width:1040px;margin:auto}
+h1{font-family:'Noto Serif Bengali',serif;font-size:1.5rem;color:var(--gold);margin-bottom:4px}
+.box{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:22px}
+#alogin{max-width:400px;margin:10vh auto 0;animation:up .7s both}
+@keyframes up{from{opacity:0;translate:0 30px}}
+.in{width:100%;padding:12px 14px;background:var(--ink);border:1px solid var(--b);border-radius:8px;color:var(--t);font-size:1rem;outline:none;margin-bottom:10px}.in:focus{border-color:var(--gold)}
+.ab{border:none;border-radius:8px;padding:9px 14px;font-weight:700;font-size:.9rem;cursor:pointer;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1200;transition:transform .15s,opacity .2s}.ab:hover{transform:translateY(-1px)}.ab:active{transform:scale(.96)}
+.ab:disabled{opacity:.5}.ab.full{width:100%}.ab.g{background:transparent;border:1px solid var(--b);color:var(--t)}.ab.g.act{border-color:var(--gold);color:var(--gold)}
+.ab.ok{background:var(--ok);color:#fff}.ab.no{background:var(--warn);color:#201500}.ab.del{background:var(--bad);color:#fff}.ab.vi{background:var(--v);color:#fff}.ab.tg{background:var(--tg);color:#fff}.ab.wa{background:var(--wa);color:#04210f}
+.msg{color:var(--bad);font-size:.88rem;margin-top:8px;min-height:1.2em}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.st{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:14px;animation:up .6s both;animation-delay:calc(var(--i)*70ms)}.st b{display:block;font-size:1.5rem;color:var(--gold2)}.st span{color:var(--m);font-size:.84rem}
+.chart{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:14px;margin-bottom:14px}.chart h3{font-size:.95rem;margin-bottom:10px;color:var(--m)}
+.bars{display:flex;gap:8px;align-items:flex-end;height:110px}.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.7rem;color:var(--m)}
+.bar i{display:block;width:100%;min-height:3px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--gold2),var(--gold));transform-origin:bottom;animation:gr .8s both}@keyframes gr{from{scale:1 0}}
+.bar em{font-style:normal;color:var(--t);font-size:.72rem;margin-bottom:2px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.chip{background:transparent;border:1px solid var(--b);color:var(--m);border-radius:20px;padding:5px 13px;font-size:.82rem;cursor:pointer}.chip.act{border-color:var(--gold);color:var(--gold);background:rgba(217,180,106,.08)}
+.tools{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}.tools .in{margin:0;flex:1;min-width:150px}.tools select.in{flex:0 0 auto;width:auto}
+.o{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:16px;margin-bottom:12px;border-left:4px solid var(--warn);animation:up .5s both}.o.approved{border-left-color:var(--ok)}.o.rejected{border-left-color:var(--bad)}
+.oh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}.id{font-weight:700;color:var(--gold)}.time{color:var(--m);font-size:.82rem}
+.badge{padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:700;background:rgba(255,255,255,.08);height:fit-content}
+.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 16px;font-size:.92rem;line-height:1.8}.rows span{color:var(--m)}
+.sec{margin-top:10px;padding:10px;background:var(--ink);border-radius:8px;font-size:.9rem}.sec h4{color:var(--warn);margin-bottom:4px}
+.trx{font-family:monospace;color:var(--gold);cursor:pointer;word-break:break-all}.bad{color:var(--bad)}
+.desc{margin-top:8px;padding:10px;background:var(--ink);border-radius:8px;font-size:.88rem;color:#d3d8e4;white-space:pre-wrap;word-break:break-word}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}.acts .in{margin:0;flex:1;min-width:200px}.empty{text-align:center;color:var(--m);padding:40px}
+label{font-size:.88rem;color:var(--m)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:#111827;border:1px solid var(--gold);padding:10px 20px;border-radius:30px;transition:.35s;z-index:90;font-size:.9rem}.toast.show{transform:translateX(-50%)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="alogin" class="box">
+    <h1>Admin Login</h1><p style="color:var(--m);margin-bottom:12px">শুধু অ্যাডমিনের জন্য</p>
+    <input class="in" id="aem" type="email" placeholder="ইমেইল" autocomplete="username">
+    <input class="in" id="apw" type="password" placeholder="পাসওয়ার্ড" autocomplete="current-password">
+    <button class="ab full" id="aloginBtn">লগইন করুন</button><div class="msg" id="almsg"></div>
+  </div>
+  <div id="adash" class="hide">
+    <div class="top"><h1>অ্যাডমিন প্যানেল</h1><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ab g" id="csvBtn">⬇ CSV</button><button class="ab g" id="arefBtn">↻ রিফ্রেশ</button><button class="ab g" id="aoutBtn">লগআউট</button></div></div>
+    <div class="tabs"><button class="ab g act" data-tab="ord">অর্ডার</button><button class="ab g" data-tab="ban">ব্যানার</button></div>
+    <div id="pOrd">
+      <div class="stats" id="astats"></div>
+      <div class="chart"><h3>গত ৭ দিনের অর্ডার</h3><div class="bars" id="achart"></div></div>
+      <div class="chips" id="achips"></div>
+      <div class="tools"><input class="in" id="aq" placeholder="নাম, ফোন, TrxID, ইমেইল বা আইডি খুঁজুন">
+        <select class="in" id="apk"><option value="all">সব প্যাকেজ</option></select>
+        <select class="in" id="asort"><option value="new">নতুন আগে</option><option value="old">পুরনো আগে</option><option value="high">দাম বেশি আগে</option></select></div>
+      <div id="alist"></div>
+    </div>
+    <div id="pBan" class="hide box">
+      <h2 style="margin-bottom:12px">হোমপেজ ব্যানার</h2>
+      <label>ছবির লিংক (https://...)</label><input class="in" id="bnUrl" maxlength="500" placeholder="https://example.com/banner.jpg">
+      <label>ক্লিক-লিংক (ঐচ্ছিক, https://...)</label><input class="in" id="bnLink" maxlength="500">
+      <label style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><input type="checkbox" id="bnOn" checked> ব্যানার চালু</label>
+      <div style="display:flex;gap:8px"><button class="ab" id="bnSave">সেভ</button><button class="ab del" id="bnDel">মুছুন</button></div><div class="msg" id="bnMsg"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+try { if (window.top !== window.self) window.top.location = window.self.location; } catch (e) { document.body.innerHTML = ''; return; }
+const CFG = { db:'https://bd-web-maker-default-rtdb.firebaseio.com', key:'AIzaSyDmSG4EPJoRHiCJSI58W63PFlHQeZX_XAI', idleMin:10, pollSec:20 };
+const APK = { basic:'নরমাল', standard:'মাঝারি', bot:'টেলিগ্রাম বট', pro:'ফুল ব্যাকএন্ড', apk:'ওয়েব টু APK', multi:'মাল্টি বিজনেস', ultra:'আল্টিমেট' };
+const SL = { pending:'ডাউন পেন্ডিং', work:'কাজ চলছে', rejected:'ডাউন রিজেক্টেড', due:'কাজ সম্পন্ন • বাকি টাকা বাকি', fpend:'ফাইনাল যাচাই বাকি', frej:'ফাইনাল রিজেক্টেড', done:'ডেলিভারড' };
+const CH = [['all','সব'],['pending','ডাউন পেন্ডিং'],['work','কাজ চলছে'],['due','বাকি টাকা অপেক্ষায়'],['fpend','ফাইনাল যাচাই'],['done','ডেলিভারড'],['rejected','রিজেক্টেড']];
+const $ = id => document.getElementById(id);
+const bn = n => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+const dn = p => Math.ceil(p / 10);
+const el = (t, c, x) => { const e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e; };
+const LINK_OK = u => typeof u === 'string' && /^https:\/\/[^\s"'<>]+$/.test(u);
+function toast(t){ const e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('show'), 2800); }
+
+let atok = null, artok = null, aexp = 0, D = {}, aprev = null, apoll = null, aidle = null, afails = 0, alock = 0, chip = 'all';
+async function aToken(){ if(Date.now() < aexp - 60000) return; const r = await fetch('https://securetoken.googleapis.com/v1/token?key=' + CFG.key, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'grant_type=refresh_token&refresh_token=' + encodeURIComponent(artok) }); const d = await r.json(); if(!r.ok) throw new Error('SESSION_EXPIRED'); atok = d.id_token; artok = d.refresh_token; aexp = Date.now() + (+d.expires_in) * 1000; }
+function aLogout(msg){ atok = artok = null; D = {}; aprev = null; clearInterval(apoll); clearTimeout(aidle); $('adash').classList.add('hide'); $('alogin').classList.remove('hide'); $('apw').value = ''; $('almsg').textContent = msg || ''; }
+async function dbGet(path){ await aToken(); const r = await fetch(`${CFG.db}/${path}.json?auth=${encodeURIComponent(atok)}`); if(!r.ok) throw new Error('DB_' + r.status); return r.json(); }
+async function dbPatch(body){ await aToken(); const r = await fetch(`${CFG.db}/.json?auth=${encodeURIComponent(atok)}`, { method:'PATCH', body: JSON.stringify(body) }); if(!r.ok) throw new Error('DB_' + r.status); }
+const SV = { '.sv':'timestamp' };
+
+async function aLoad(){
+  try {
+    const keys = ['orders','review','delivery','finalpay','finalreview','links'];
+    const res = await Promise.all(keys.map(k => dbGet(k)).concat(dbGet('adminNotes').catch(() => null)));
+    keys.forEach((k, i) => D[k] = res[i] || {}); D.notes = res[keys.length] || {};
+    const tot = Object.keys(D.orders).length + Object.keys(D.finalpay).length;
+    if(aprev !== null && tot > aprev){ toast('🔔 নতুন পেমেন্ট/অর্ডার এসেছে!'); document.title = '(নতুন) Admin – Web Maker'; }
+    aprev = tot; aRender();
+  } catch(e) {
+    const m = String(e.message);
+    if(m === 'DB_401' || m === 'DB_403') toast('অনুমতি নেই। Rules-এ ADMIN_UID ঠিক আছে কিনা দেখুন।');
+    else if(m === 'SESSION_EXPIRED') aLogout('সেশন শেষ। আবার লগইন করুন।');
+    else toast('লোড করা যায়নি।');
+  }
+}
+function stageOf(id){
+  const st = (D.review[id] && D.review[id].status) || 'pending';
+  if(st === 'rejected') return 'rejected'; if(st === 'pending') return 'pending';
+  if(!(D.delivery[id] && D.delivery[id].done)) return 'work';
+  if(!D.finalpay[id]) return 'due';
+  const fs = D.finalreview[id] && D.finalreview[id].status;
+  return fs === 'approved' ? 'done' : fs === 'rejected' ? 'frej' : 'fpend';
+}
+const grp = s => s === 'frej' ? 'rejected' : s;
+function aList(){ return Object.entries(D.orders).map(([id, o]) => ({ id, ...o, stage: stageOf(id) })); }
+const downOf = o => +o.down || dn(+o.price);
+const paid = o => (['work','due','fpend','frej','done'].includes(o.stage) ? downOf(o) : 0) + (o.stage === 'done' ? (+o.price - downOf(o)) : 0);
+function aRender(){
+  const all = aList(), today = new Date().toDateString();
+  const rev = all.reduce((s, o) => s + paid(o), 0);
+  const due = all.filter(o => o.stage === 'due').reduce((s, o) => s + (+o.price - downOf(o)), 0);
+  const stats = [['মোট অর্ডার', bn(all.length)], ['আজকের অর্ডার', bn(all.filter(o => o.createdAt && new Date(+o.createdAt).toDateString() === today).length)], ['ডাউন পেন্ডিং', bn(all.filter(o => o.stage === 'pending').length)], ['ফাইনাল যাচাই বাকি', bn(all.filter(o => o.stage === 'fpend').length)], ['কনফার্মড আয়', '৳ ' + bn(rev)], ['আদায় বাকি', '৳ ' + bn(due)]];
+  $('astats').replaceChildren(...stats.map(([l, v], i) => { const d = el('div', 'st'); d.style.setProperty('--i', i); d.append(el('b', '', v), el('span', '', l)); return d; }));
+  const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() - 6 + i); return d; }), mx = Math.max(1, ...days.map(d => all.filter(o => o.createdAt && new Date(+o.createdAt).toDateString() === d.toDateString()).length));
+  $('achart').replaceChildren(...days.map(d => { const n = all.filter(o => o.createdAt && new Date(+o.createdAt).toDateString() === d.toDateString()).length, b = el('div', 'bar'), i = el('i'); i.style.height = (n / mx * 78) + '%'; b.append(el('em', '', bn(n)), i, el('div', '', bn(d.getDate()) + '/' + bn(d.getMonth() + 1))); return b; }));
+  $('achips').replaceChildren(...CH.map(([k, l]) => { const n = k === 'all' ? all.length : all.filter(o => grp(o.stage) === k).length, c = el('button', 'chip' + (chip === k ? ' act' : ''), l + ' (' + bn(n) + ')'); c.onclick = () => { chip = k; aRender(); }; return c; }));
+  const pk = $('apk'); if(pk.options.length < 2) Object.entries(APK).forEach(([k, v]) => pk.add(new Option(v, k)));
+  const rows = filtered(all);
+  if(!rows.length){ $('alist').replaceChildren(el('div', 'empty', 'কোনো অর্ডার পাওয়া যায়নি')); return; }
+  $('alist').replaceChildren(...rows.map(card));
+}
+function filtered(all){
+  const q = $('aq').value.trim().toLowerCase(), p = $('apk').value, s = $('asort').value;
+  return all.filter(o => (chip === 'all' || grp(o.stage) === chip) && (p === 'all' || o.package === p) && (!q || [o.id, o.name, o.contact, o.trx, o.sender, o.email].some(x => String(x || '').toLowerCase().includes(q))))
+    .sort((a, b) => s === 'old' ? (+a.createdAt || 0) - (+b.createdAt || 0) : s === 'high' ? (+b.price || 0) - (+a.price || 0) : (+b.createdAt || 0) - (+a.createdAt || 0));
+}
+function contactBtns(o, box){
+  const c = String(o.contact || '');
+  if(/^@/.test(c)){ const b = el('a', 'ab tg', 'টেলিগ্রামে মেসেজ'); b.href = 'https://t.me/' + encodeURIComponent(c.slice(1)); b.target = '_blank'; b.rel = 'noopener noreferrer'; b.style.textDecoration = 'none'; box.append(b); }
+  else if(/^01\d{9}$/.test(c)){ const b = el('a', 'ab wa', 'WhatsApp'); b.href = 'https://wa.me/880' + c.slice(1); b.target = '_blank'; b.rel = 'noopener noreferrer'; b.style.textDecoration = 'none'; box.append(b); }
+}
+function card(o, idx){
+  const down = downOf(o), rest = +o.price - down;
+  const c = el('div', 'o ' + (['work','due','fpend','done'].includes(o.stage) ? 'approved' : o.stage === 'pending' ? '' : 'rejected')); c.style.animationDelay = Math.min(idx, 8) * 40 + 'ms';
+  const h = el('div', 'oh'), l = el('div'); l.append(el('span', 'id', o.id), el('div', 'time', o.createdAt ? new Date(o.createdAt).toLocaleString('bn-BD') : ''));
+  h.append(l, el('span', 'badge', SL[o.stage]));
+  const r = el('div', 'rows'), add = (box, k, v, cls) => { const d = el('div'); d.append(el('span', '', k + ': '), el('b', cls || '', v)); box.append(d); return d; };
+  add(r, 'নাম', o.name); add(r, 'যোগাযোগ', o.contact); add(r, 'ইমেইল', o.email || '—');
+  add(r, 'প্যাকেজ', (APK[o.package] || o.package) + ' (মোট ৳ ' + bn(o.price) + ')');
+  add(r, 'ডাউন প্রযোজ্য', '৳ ' + bn(down) + ' • বাকি ৳ ' + bn(rest));
+  c.append(h, r);
+  const s1 = el('div', 'sec'); s1.append(el('h4', '', '১) ডাউন পেমেন্ট'));
+  const mism = o.amount == null || +o.amount !== down;
+  add(s1, 'ইউজার দাবি করেছে', '৳ ' + bn(o.amount) + (mism ? ' ⚠ মিলছে না' : ''), mism ? 'bad' : '');
+  add(s1, 'মেথড', o.method === 'bkash' ? 'bKash' : 'Nagad'); add(s1, 'প্রেরক নম্বর', o.sender); copyRow(s1, add, 'TrxID', o.trx); c.append(s1);
+  const fp = D.finalpay[o.id];
+  if(fp){
+    const s2 = el('div', 'sec'); s2.append(el('h4', '', '২) বাকি পেমেন্ট'));
+    const fm = +fp.amount !== rest;
+    add(s2, 'ইউজার দাবি করেছে', '৳ ' + bn(fp.amount) + (fm ? ' ⚠ মিলছে না (প্রয়োজন ৳ ' + bn(rest) + ')' : ''), fm ? 'bad' : '');
+    add(s2, 'মেথড', fp.method === 'bkash' ? 'bKash' : 'Nagad'); add(s2, 'প্রেরক নম্বর', fp.sender); copyRow(s2, add, 'TrxID', fp.trx); c.append(s2);
+  }
+  c.append(el('div', 'desc', o.desc));
+  const nt = el('div', 'acts'), ni = el('input', 'in'); ni.placeholder = 'অ্যাডমিন নোট (শুধু আপনি দেখবেন)'; ni.maxLength = 300; ni.value = D.notes[o.id] || '';
+  const ns = el('button', 'ab g', '💾 নোট সেভ'); ns.onclick = () => { const v = ni.value.trim(); act({ ['adminNotes/' + o.id]: v || null }, 'নোট সেভ হয়েছে'); }; nt.append(ni, ns); contactBtns(o, nt); c.append(nt);
+  const a = el('div', 'acts'), btn = (cls, txt, fn, confirmTxt) => { const b = el('button', 'ab ' + cls, txt); let armed = false; b.onclick = () => { if(confirmTxt && !armed){ armed = true; b.textContent = confirmTxt; setTimeout(() => { armed = false; b.textContent = txt; }, 4000); return; } fn(); }; a.append(b); return b; };
+  const st = (D.review[o.id] && D.review[o.id].status) || 'pending';
+  if(st !== 'approved') btn('ok', '✓ ডাউন অ্যাপ্রুভ', () => act({ ['review/' + o.id]: { status:'approved', at:SV } }), 'অ্যাপে মিলিয়েছেন? আবার চাপুন');
+  if(st !== 'rejected') btn('no', '✕ ডাউন রিজেক্ট', () => act({ ['review/' + o.id]: { status:'rejected', at:SV } }));
+  if(st !== 'pending' && !D.delivery[o.id]) btn('g', '↺ পেন্ডিং', () => act({ ['review/' + o.id]: { status:'pending', at:SV } }));
+  if(st === 'approved' && !D.delivery[o.id]) btn('vi', '🎉 কাজ সম্পন্ন (বাকি টাকা চাইবে)', () => act({ ['delivery/' + o.id]: { done:true, at:SV } }), 'নিশ্চিত? আবার চাপুন');
+  if(D.delivery[o.id] && !fp) btn('g', '↩ ডেলিভারি বাতিল', () => act({ ['delivery/' + o.id]: null }));
+  c.append(a);
+  if(fp){
+    const a2 = el('div', 'acts'), li = el('input', 'in'); li.placeholder = 'ডেলিভারি লিংক (https://...)'; li.maxLength = 500; li.value = D.links[o.id] || '';
+    const fs = D.finalreview[o.id] && D.finalreview[o.id].status, b = (cls, txt, fn) => { const x = el('button', 'ab ' + cls, txt); x.onclick = fn; return x; };
+    a2.append(li);
+    if(fs !== 'approved') a2.append(b('ok', '✓ ফাইনাল অ্যাপ্রুভ + লিংক', () => { const v = li.value.trim(); if(!LINK_OK(v)){ toast('https:// দিয়ে শুরু হওয়া সঠিক লিংক দিন'); return; } act({ ['finalreview/' + o.id]: { status:'approved', at:SV }, ['links/' + o.id]: v }); }));
+    else a2.append(b('ok', '💾 লিংক আপডেট', () => { const v = li.value.trim(); if(!LINK_OK(v)){ toast('সঠিক লিংক দিন'); return; } act({ ['links/' + o.id]: v }); }));
+    if(fs !== 'rejected' && fs !== 'approved') a2.append(b('no', '✕ ফাইনাল রিজেক্ট', () => act({ ['finalreview/' + o.id]: { status:'rejected', at:SV } })));
+    if(fs !== 'approved') a2.append(b('g', '↺ ফাইনাল রিসেট', () => act({ ['finalpay/' + o.id]: null, ['finalreview/' + o.id]: null, ['trx/' + fp.trx]: null })));
+    c.append(a2);
+  }
+  const a3 = el('div', 'acts'), dl = el('button', 'ab del', '🗑 অর্ডার ডিলিট'); let armed = false;
+  dl.onclick = () => { if(!armed){ armed = true; dl.textContent = 'নিশ্চিত? আবার চাপুন'; setTimeout(() => { armed = false; dl.textContent = '🗑 অর্ডার ডিলিট'; }, 3000); return; }
+    const b = { ['orders/' + o.id]: null, ['trx/' + o.trx]: null, ['review/' + o.id]: null, ['delivery/' + o.id]: null, ['finalpay/' + o.id]: null, ['finalreview/' + o.id]: null, ['links/' + o.id]: null, ['adminNotes/' + o.id]: null };
+    if(fp) b['trx/' + fp.trx] = null; if(o.uid) b['userOrders/' + o.uid + '/' + o.id] = null; act(b, 'ডিলিট হয়েছে'); };
+  a3.append(dl); c.append(a3);
+  return c;
+}
+function copyRow(box, add, k, v){ const t = add(box, k, v, 'trx'); t.title = 'কপি করতে ট্যাপ করুন'; t.addEventListener('click', async () => { try { await navigator.clipboard.writeText(v); toast('TrxID কপি হয়েছে'); } catch(e) { toast('কপি করা যায়নি'); } }); }
+async function act(body, msg){ try { await dbPatch(body); toast(msg || 'আপডেট হয়েছে ✓'); await aLoad(); } catch(e) { toast('করা যায়নি (' + e.message + ')'); } }
+
+$('csvBtn').onclick = () => {
+  const q = s => '"' + String(s == null ? '' : s).replace(/"/g, '""').replace(/^([=+\-@])/, "'$1") + '"';
+  const rows = [['ID','তারিখ','নাম','যোগাযোগ','ইমেইল','প্যাকেজ','মোট','ডাউন','TrxID','স্ট্যাটাস','নোট']].concat(filtered(aList()).map(o => [o.id, o.createdAt ? new Date(+o.createdAt).toISOString() : '', o.name, o.contact, o.email, APK[o.package] || o.package, o.price, downOf(o), o.trx, SL[o.stage], D.notes[o.id] || '']));
+  try { const u = URL.createObjectURL(new Blob(['\ufeff' + rows.map(r => r.map(q).join(',')).join('\n')], { type:'text/csv' })), a = document.createElement('a'); a.href = u; a.download = 'orders.csv'; a.click(); setTimeout(() => URL.revokeObjectURL(u), 3000); toast('CSV ডাউনলোড হচ্ছে'); } catch(e) { toast('এক্সপোর্ট করা যায়নি'); }
+};
+document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('act', x === b));
+  $('pOrd').classList.toggle('hide', b.dataset.tab !== 'ord'); $('pBan').classList.toggle('hide', b.dataset.tab !== 'ban');
+  if(b.dataset.tab === 'ban') dbGet('settings/banner').then(x => { x = x || {}; $('bnUrl').value = x.img || ''; $('bnLink').value = x.link || ''; $('bnOn').checked = x.on !== false; }).catch(() => toast('ব্যানার লোড হয়নি'));
+}));
+$('bnSave').onclick = async () => {
+  const img = $('bnUrl').value.trim(), link = $('bnLink').value.trim(), m = $('bnMsg'); m.textContent = '';
+  if(!LINK_OK(img)){ m.textContent = 'সঠিক https ছবির লিংক দিন'; return; }
+  if(link && !LINK_OK(link)){ m.textContent = 'ক্লিক-লিংক https:// দিয়ে শুরু হতে হবে'; return; }
+  try { await dbPatch({ 'settings/banner': { img, link, on: $('bnOn').checked, at: SV } }); toast('ব্যানার সেভ হয়েছে ✓'); } catch(e) { m.textContent = 'সেভ হয়নি। Rules চেক করুন।'; }
+};
+$('bnDel').onclick = async () => { try { await dbPatch({ 'settings/banner': null }); $('bnUrl').value = ''; $('bnLink').value = ''; toast('ব্যানার মুছে গেছে'); } catch(e) { toast('মোছা যায়নি'); } };
+
+async function doLogin(){
+  if(Date.now() < alock){ $('almsg').textContent = 'কিছুক্ষণ পর আবার চেষ্টা করুন'; return; }
+  const b = $('aloginBtn'); b.disabled = true; $('almsg').textContent = '';
+  try {
+    const r = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + CFG.key, { method:'POST', body: JSON.stringify({ email:$('aem').value.trim(), password:$('apw').value, returnSecureToken:true }) });
+    const d = await r.json(); if(!r.ok) throw new Error('LOGIN_FAILED');
+    atok = d.idToken; artok = d.refreshToken; aexp = Date.now() + (+d.expiresIn) * 1000;
+    afails = 0; $('alogin').classList.add('hide'); $('adash').classList.remove('hide');
+    await aLoad(); apoll = setInterval(() => { if(!document.hidden) aLoad(); }, CFG.pollSec * 1000); bumpIdle();
+  } catch(e) { if(++afails >= 5){ alock = Date.now() + 60000; afails = 0; $('almsg').textContent = 'অনেকবার ভুল। ১ মিনিট অপেক্ষা করুন।'; } else $('almsg').textContent = 'ইমেইল বা পাসওয়ার্ড ভুল।'; }
+  b.disabled = false;
+}
+$('aloginBtn').onclick = doLogin; $('apw').addEventListener('keydown', e => { if(e.key === 'Enter') doLogin(); });
+$('aoutBtn').onclick = () => aLogout('লগআউট হয়েছে'); $('arefBtn').onclick = () => { aLoad(); toast('রিফ্রেশ হচ্ছে...'); };
+$('aq').oninput = aRender; $('apk').onchange = aRender; $('asort').onchange = aRender;
+document.addEventListener('visibilitychange', () => { if(!document.hidden) document.title = 'Admin – Web Maker'; });
+function bumpIdle(){ clearTimeout(aidle); if(atok) aidle = setTimeout(() => aLogout('নিষ্ক্রিয়তার কারণে লগআউট হয়েছে।'), CFG.idleMin * 60000); }
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, bumpIdle));
+})();
+</script>
+</body>
+</html>
