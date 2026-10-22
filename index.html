@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src data: https:; connect-src https://bd-web-maker-default-rtdb.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; worker-src 'self'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Web Maker – Custom Website Order</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030b1f;--ink:#07142e;--card:#0a1a3a;--gold:#3b82f6;--gold2:#a8c8ff;--t:#eef4ff;--m:#8fa6cf;--b:#16284d;--ok:#34c38f;--bad:#ff6b7a;--warn:#f5b84b;--tg:#0088cc;--wa:#25d366;--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{background:var(--bg);color:var(--t);min-height:100vh;padding:18px;overflow-x:hidden}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);z-index:-1;pointer-events:none;opacity:.35;animation:dr 18s ease-in-out infinite alternate}
+.o1{width:420px;height:420px;background:#1d4ed8;top:-120px;left:-100px}.o2{width:380px;height:380px;background:#0ea5e9;bottom:-120px;right:-80px;animation-delay:-8s}
+@keyframes dr{to{translate:60px 50px;scale:1.2}}
+.hide{display:none!important}
+.app{max-width:960px;margin:auto;background:rgba(13,18,32,.78);backdrop-filter:blur(14px);border:1px solid var(--b);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:pop 1s var(--ease) backwards}
+@keyframes pop{from{opacity:0;translate:0 40px;scale:.96;filter:blur(8px)}}
+.banner{display:block;width:100%;aspect-ratio:3/1;max-height:300px;overflow:hidden;background:#0b0f19}.banner img{width:100%;height:100%;object-fit:cover;display:block;animation:zm 14s ease-in-out infinite alternate}@keyframes zm{to{scale:1.07}}
+header{padding:34px 20px 24px;text-align:center;border-bottom:1px solid var(--b);position:relative;overflow:hidden}
+header::after{content:"";position:absolute;left:-60%;top:0;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(168,200,255,.09),transparent);skew:-20deg;animation:sw 6s ease-in-out infinite}@keyframes sw{to{left:130%}}
+header h1{font-size:2.3rem;letter-spacing:.5px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 6s linear infinite}@keyframes sh{to{background-position:-220% 0}}
+header p{color:var(--m);margin-top:6px}
+.ubar{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:16px;font-size:.85rem;color:var(--m)}
+.ubar button{background:transparent;border:1px solid var(--b);color:var(--t);border-radius:20px;padding:6px 15px;cursor:pointer;transition:.25s}.ubar button:hover{border-color:var(--gold);color:var(--gold)}
+.screen{display:none;padding:26px}.screen.on{display:block;animation:fd .6s var(--ease)}@keyframes fd{from{opacity:0;translate:0 20px;filter:blur(6px)}}
+h2{font-size:1.45rem;margin-bottom:6px}.sub{color:var(--m);font-size:.93rem;margin-bottom:18px;line-height:1.7}
+.back-btn{background:none;border:none;color:var(--m);cursor:pointer;font-size:.95rem;margin-bottom:14px;display:block;transition:.2s}.back-btn:hover{color:var(--gold);translate:-3px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;perspective:900px}
+.card{--rx:0deg;--ry:0deg;--mx:50%;--my:50%;background:var(--card);border:1px solid var(--b);border-radius:6px;padding:24px 16px;text-align:left;cursor:pointer;color:var(--t);position:relative;overflow:hidden;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .2s ease-out,border-color .3s,box-shadow .3s;opacity:0;translate:0 40px}
+.card.in{opacity:1;translate:0 0;transition:opacity .7s var(--ease),translate .7s var(--ease),transform .2s ease-out,border-color .3s,box-shadow .3s;transition-delay:calc(var(--i)*80ms),calc(var(--i)*80ms),0s,0s,0s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(240px circle at var(--mx) var(--my),rgba(59,130,246,.16),transparent 60%);opacity:0;transition:.3s;pointer-events:none}
+.card:hover{border-color:var(--gold);box-shadow:0 18px 40px rgba(59,130,246,.14)}.card:hover::before{opacity:1}
+.card .ic{font-size:1.7rem;color:var(--gold);margin-bottom:10px;display:inline-block}.card:hover .ic{animation:wob .6s}@keyframes wob{30%{rotate:-12deg;scale:1.2}60%{rotate:8deg}}
+.card .nm{font-weight:700;font-size:1.05rem}
+.card .pr{font-size:2rem;font-weight:700;color:var(--gold2);margin:6px 0 2px}.card .dp{font-size:.8rem;color:var(--warn);margin-bottom:8px}.card .ds{font-size:.85rem;color:var(--m);line-height:1.55}
+.card .ct{margin-top:12px;font-size:.8rem;color:var(--gold)}
+.tag{position:absolute;top:0;right:0;background:var(--gold);color:#fff;font-size:.7rem;font-weight:700;padding:4px 12px;border-bottom-left-radius:6px;animation:pl 2.4s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 rgba(59,130,246,.55)}70%,100%{box-shadow:0 0 0 12px transparent}}
+.feat{list-style:none;margin:14px 0 18px}.feat li{padding:11px 14px;background:var(--card);border:1px solid var(--b);border-left:3px solid var(--gold);margin-bottom:8px;font-size:.95rem;animation:sl .5s var(--ease) backwards;animation-delay:calc(var(--i)*80ms + .1s)}
+.feat li.inh{border-left-color:var(--b);color:var(--m)}
+@keyframes sl{from{opacity:0;translate:-24px 0}}
+.feat i{color:var(--ok);margin-right:10px}
+.big{font-size:2.8rem;font-weight:800;color:var(--gold2);display:block}.dpbox{display:block;width:fit-content;margin:6px 0 4px;padding:6px 14px;border:1px solid var(--warn);color:var(--warn);border-radius:20px;font-size:.9rem}
+.cbox{background:var(--ink);border:1px solid var(--b);border-radius:8px;padding:16px;margin:16px 0}.cbox h3{font-size:1.05rem;margin-bottom:6px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}.cgrid .btn{margin-top:0}
+label{display:block;margin-bottom:7px;font-weight:600;font-size:.95rem}.fg{margin-bottom:18px}
+.in{width:100%;padding:12px 14px;background:var(--ink);border:1px solid var(--b);border-radius:8px;color:var(--t);font-size:1rem;outline:none;transition:.25s}.in:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(59,130,246,.12)}
+textarea.in{min-height:120px;resize:vertical}
+.err{color:var(--bad);font-size:.82rem;margin-top:5px;display:none}.fg.bad .err{display:block;animation:shk .4s}.fg.bad .in{border-color:var(--bad)}@keyframes shk{25%{translate:-6px 0}75%{translate:6px 0}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.btn{width:100%;padding:13px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold2),var(--gold));background-size:200% 100%;color:#fff;font-size:1.02rem;font-weight:700;cursor:pointer;margin-top:8px;display:block;text-decoration:none;text-align:center;position:relative;overflow:hidden;transition:transform .2s,box-shadow .3s,background-position .5s}
+.btn::after{content:"";position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);skew:-20deg;transition:left .6s}
+.btn:hover{background-position:100% 0;box-shadow:0 10px 28px rgba(59,130,246,.28);transform:translateY(-2px)}.btn:hover::after{left:130%}.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed}.btn.tg{background:var(--tg);color:#fff}.btn.wa{background:var(--wa);color:#04210f}.btn.ghost{background:transparent;border:1px solid var(--b);color:var(--t)}.btn.warnb{background:var(--warn);color:#201500;animation:pl 2.2s infinite}
+.center{text-align:center}.emailbox{max-width:360px;margin:0 auto;text-align:left}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(110px);background:#111827;border:1px solid var(--gold);padding:10px 20px;border-radius:30px;transition:transform .5s cubic-bezier(.34,1.56,.64,1);z-index:90;font-size:.9rem;max-width:92vw;text-align:center}.toast.show{transform:translateX(-50%)}
+.np{position:fixed;left:50%;bottom:-260px;transform:translateX(-50%);width:min(92vw,420px);background:var(--card);border:1px solid var(--gold);border-radius:16px;padding:18px;z-index:95;box-shadow:0 20px 50px rgba(0,0,0,.6);transition:bottom .6s cubic-bezier(.34,1.56,.64,1)}.np.show{bottom:20px}
+.np h3{font-size:1.05rem;margin-bottom:6px}.np h3 i{color:var(--gold);margin-right:8px}.np p{color:var(--m);font-size:.88rem;line-height:1.65;margin-bottom:10px}
+.np .row{display:flex;gap:8px}.np .btn{margin-top:0;padding:10px;font-size:.92rem}
+.ord{background:var(--ink);border:1px solid var(--b);border-radius:8px;padding:16px;margin-bottom:14px;line-height:1.8;word-break:break-word;animation:rs .6s var(--ease) backwards;animation-delay:calc(var(--i)*80ms)}@keyframes rs{from{opacity:0;translate:0 30px}}
+.ord.pending,.ord.fpend,.ord.work{border-left:4px solid var(--warn)}.ord.done{border-left:4px solid var(--ok)}.ord.rejected,.ord.frej{border-left:4px solid var(--bad)}.ord.due{border-left:4px solid var(--gold)}
+.oh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.oid{font-weight:700;color:var(--gold)}.bd{padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:700;background:rgba(255,255,255,.08)}
+.stp{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 6px}.stp div{font-size:.7rem;color:var(--m);text-align:center}.stp div::before{content:"";display:block;height:5px;border-radius:5px;background:var(--b);margin-bottom:4px}
+.stp div.on{color:var(--t)}.stp div.on::before{background:linear-gradient(90deg,var(--gold),var(--gold2));animation:fl .8s var(--ease) backwards;animation-delay:calc(var(--k)*140ms);transform-origin:left}.stp div.bad::before{background:var(--bad)}.stp div.cur::before{animation:bk 1.4s infinite}
+@keyframes fl{from{scale:0 1}}@keyframes bk{50%{opacity:.45}}
+.note{padding:12px 14px;border-radius:8px;font-size:.92rem;margin:10px 0 4px;line-height:1.7;background:rgba(255,255,255,.04);border:1px solid var(--b)}
+.skel{height:90px;border-radius:8px;margin-bottom:12px;background:linear-gradient(90deg,#121a29 25%,#1b2640 50%,#121a29 75%);background-size:200% 100%;animation:sk 1.2s infinite}@keyframes sk{to{background-position:-200% 0}}
+#go{position:fixed;inset:0;z-index:80;background:rgba(3,11,31,.94);display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}#go.on{display:flex}
+#go::before{content:"";width:56px;height:56px;border-radius:50%;border:4px solid var(--b);border-top-color:var(--gold);animation:sp .8s linear infinite}@keyframes sp{to{rotate:360deg}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.card{opacity:1;translate:0 0}}
+
+html{scroll-behavior:smooth}
+body{padding:0;background:radial-gradient(120% 80% at 50% -10%,#0d2a66 0%,#030b1f 58%) fixed}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(79,140,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(79,140,255,.07) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(70% 60% at 50% 25%,#000,transparent);mask-image:radial-gradient(70% 60% at 50% 25%,#000,transparent);animation:gd 24s linear infinite}@keyframes gd{to{background-position:46px 46px}}
+.app{max-width:none;background:none;border:none;border-radius:0;box-shadow:none;backdrop-filter:none;overflow:visible;animation:none;min-height:100vh;display:flex;flex-direction:column}
+.nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;padding:12px 22px;background:rgba(3,11,31,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--b);text-align:left;overflow:visible;flex-wrap:wrap}.nav::after{display:none}
+.brand{font-weight:800;font-size:1.3rem;color:var(--gold2);cursor:pointer;text-decoration:none}.brand i{color:var(--gold);margin-right:6px}
+.links{display:flex;gap:4px;margin-right:auto;flex-wrap:wrap}.links button{background:none;border:none;color:var(--m);padding:8px 15px;border-radius:20px;cursor:pointer;font-size:.92rem;transition:.25s}.links button:hover,.links button.act{color:#fff;background:rgba(59,130,246,.17)}
+.ur{display:flex;gap:8px;align-items:center;font-size:.82rem;color:var(--m)}.ur button{background:transparent;border:1px solid var(--b);color:var(--t);border-radius:20px;padding:6px 14px;cursor:pointer;transition:.25s}.ur button:hover{border-color:var(--gold);color:var(--gold2)}
+.banner{max-width:1120px;margin:16px auto 0;border-radius:14px;width:calc(100% - 48px)}
+.screen{padding:44px 24px 40px;max-width:1120px;width:100%;margin:0 auto;min-height:calc(100vh - 360px)}
+.screen.on{animation:pg .7s var(--ease)}@keyframes pg{from{opacity:0;translate:0 26px;filter:blur(8px)}}
+.screen.on>*{animation:up .7s var(--ease) backwards}.screen.on>:nth-child(2){animation-delay:.07s}.screen.on>:nth-child(3){animation-delay:.14s}.screen.on>:nth-child(4){animation-delay:.21s}.screen.on>:nth-child(5){animation-delay:.28s}@keyframes up{from{opacity:0;translate:0 18px}}
+h2{font-size:1.7rem;font-weight:700}
+.hero{text-align:center;padding:50px 0 34px}.pill{display:inline-block;border:1px solid #1b3166;background:rgba(59,130,246,.1);color:var(--gold2);padding:6px 16px;border-radius:30px;font-size:.85rem;animation:pl 2.6s infinite}
+.hero h1{font-size:clamp(2rem,6vw,3.7rem);line-height:1.22;font-weight:800;margin:18px 0 14px}
+.hero em{font-style:normal;background:linear-gradient(90deg,#60a5fa,#c7dcff,#38bdf8,#60a5fa);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 6s linear infinite}
+.hero p{color:var(--m);font-size:1.08rem;max-width:620px;margin:0 auto 26px;line-height:1.8}
+.hbtn{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.hbtn .btn{width:auto;padding:14px 30px;margin:0}
+.feats,.hows{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:26px}
+.fc,.hw{background:linear-gradient(160deg,rgba(59,130,246,.09),var(--ink));border:1px solid var(--b);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:6px;transition:translate .4s cubic-bezier(.34,1.56,.64,1),border-color .3s,box-shadow .3s}
+.fc:hover,.hw:hover{translate:0 -6px;border-color:var(--gold);box-shadow:0 16px 36px rgba(37,99,235,.2)}
+.fc i{font-size:1.6rem;color:var(--gold)}.fc span,.hw span{color:var(--m);font-size:.9rem}
+.hw i{font-style:normal;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#60a5fa);display:grid;place-items:center;font-weight:700;color:#fff;margin-bottom:6px}
+.card{border-radius:12px;background:linear-gradient(160deg,rgba(59,130,246,.07),var(--card))}
+.btn{border-radius:10px}.btn:active{transform:scale(.97)}
+details{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:14px 18px;margin-bottom:10px;transition:border-color .3s}details[open]{border-color:var(--gold)}summary{cursor:pointer;font-weight:600}details p{color:var(--m);margin-top:10px;line-height:1.7}
+footer{margin-top:30px;border-top:1px solid var(--b);background:rgba(3,11,31,.75);padding:34px 24px 18px}
+.ftw{max-width:1120px;margin:auto;display:grid;grid-template-columns:1fr 2fr;gap:26px}.ftw h3{color:var(--gold2);font-size:1.3rem;margin-bottom:6px}.ftw h4{margin-bottom:10px;color:var(--t)}.ftw .sub{margin:0}
+.ftw .cgrid{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}.ftw .btn{padding:10px;font-size:.88rem}
+.ftb{max-width:1120px;margin:22px auto 0;padding-top:14px;border-top:1px solid var(--b);color:var(--m);font-size:.8rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:720px){.ftw{grid-template-columns:1fr}.nav{padding:10px 14px}.screen{padding:30px 16px 30px}}
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div>
+<div id="go"><h2>পেমেন্ট পেজে নেওয়া হচ্ছে...</h2><p class="sub">একটু অপেক্ষা করুন</p></div>
+<div class="app">
+  <a class="banner hide" id="banner" target="_blank" rel="noopener noreferrer"><img id="bannerImg" alt="ব্যানার" referrerpolicy="no-referrer"></a>
+  <header class="nav"><a class="brand" data-go="welcome"><i class="fa-solid fa-code"></i> Web Maker</a>
+    <nav class="links"><button type="button" data-go="welcome">হোম</button><button type="button" data-go="home">প্যাকেজ</button><button type="button" data-go="orders">আমার অর্ডার</button><button type="button" data-go="support">সাপোর্ট</button></nav>
+    <div class="ur"><span id="uinfo" class="hide"></span><button type="button" id="ulogout" class="hide"><i class="fa-solid fa-right-from-bracket"></i> লগআউট</button></div></header>
+
+  <section class="screen" id="welcome">
+    <div class="hero"><span class="pill">🚀 কাস্টম ওয়েবসাইট • বট • APK</span><h1>আপনার ব্যবসার জন্য <em>প্রিমিয়াম ওয়েবসাইট</em> বানিয়ে দিই</h1><p>৩০ টাকা থেকে শুরু। প্যাকেজ মূল্যের ১০% ডাউন পেমেন্টে কাজ শুরু, বাকি টাকা কাজ শেষে।</p><div class="hbtn"><button type="button" class="btn" data-go="home">প্যাকেজ দেখুন <i class="fa-solid fa-arrow-right"></i></button><button type="button" class="btn ghost" data-go="support">ডেভেলপারের সাথে কথা বলুন</button></div></div>
+    <div class="feats"><div class="fc"><i class="fa-solid fa-bolt"></i><b>দ্রুত ডেলিভারি</b><span>কাজ বুঝে নিয়ে দ্রুত শুরু</span></div><div class="fc"><i class="fa-solid fa-shield-halved"></i><b>সুরক্ষিত পেমেন্ট</b><span>TrxID যাচাই ও অ্যাডমিন অ্যাপ্রুভাল</span></div><div class="fc"><i class="fa-solid fa-mobile-screen"></i><b>মোবাইল ফ্রেন্ডলি</b><span>সব ডিভাইসে সুন্দর ডিজাইন</span></div><div class="fc"><i class="fa-solid fa-headset"></i><b>সরাসরি সাপোর্ট</b><span>টেলিগ্রাম ও WhatsApp-এ</span></div></div>
+    <h2 style="margin-top:34px">কীভাবে কাজ হয়</h2>
+    <div class="hows"><div class="hw"><i>১</i><b>প্যাকেজ বাছুন</b><span>দাম ও সুবিধা দেখে নিন</span></div><div class="hw"><i>২</i><b>কথা বলুন</b><span>টেলিগ্রাম/WhatsApp-এ কাজ বুঝিয়ে দিন</span></div><div class="hw"><i>৩</i><b>১০% ডাউন পেমেন্ট</b><span>bKash/Nagad-এ সিকিউর পেমেন্ট</span></div><div class="hw"><i>৪</i><b>কাজ শেষে বাকি টাকা</b><span>পেমেন্টের পর ডেলিভারি লিংক</span></div></div>
+  </section>
+
+  <section class="screen" id="support">
+    <h2>সাপোর্ট</h2><p class="sub">যেকোনো প্রশ্ন বা সমস্যায় সরাসরি যোগাযোগ করুন।</p>
+    <div class="cgrid" id="supGrid"></div>
+    <h2 style="margin-top:30px">সচরাচর প্রশ্ন</h2>
+    <details><summary>ডাউন পেমেন্ট কত দিতে হবে?</summary><p>প্যাকেজ মূল্যের ১০%। যেমন ৩০০ টাকার প্যাকেজে ৩০ টাকা।</p></details>
+    <details><summary>ডেলিভারি লিংক কখন পাব?</summary><p>কাজ শেষ হলে বাকি টাকা পরিশোধ করুন। অ্যাডমিন যাচাই করে অ্যাপ্রুভ করলে "আমার অর্ডার" পেজে লিংক দেখা যাবে।</p></details>
+    <details><summary>কীভাবে পেমেন্ট করব?</summary><p>bKash বা Nagad-এ Send Money করে TrxID পেমেন্ট পেজে দিন।</p></details>
+    <details><summary>ভুল TrxID দিলে কী হবে?</summary><p>অ্যাডমিন যাচাইয়ে না মিললে অর্ডার রিজেক্ট হয়। সঠিক তথ্যসহ সাপোর্টে যোগাযোগ করুন।</p></details>
+    <details><summary>নোটিফিকেশন কীভাবে পাব?</summary><p>অ্যাপ খোলার সময় নোটিফিকেশনের অনুমতি চাইলে "অনুমতি দিন" চাপুন। এরপর অর্ডার কনফার্ম/ক্যান্সেল, নতুন প্যাকেজ ও নতুন ব্যানার আসলে মোবাইলে নোটিফিকেশন পাবেন।</p></details>
+  </section>
+
+  <section class="screen center" id="login">
+    <h2>লগইন / রেজিস্টার</h2>
+    <p class="sub">প্যাকেজ ও দাম দেখতে এবং অর্ডার করতে ইমেইল-পাসওয়ার্ড দিয়ে লগইন করুন, অথবা নতুন অ্যাকাউন্ট খুলুন।</p>
+    <div class="emailbox">
+      <div class="fg" style="margin-bottom:12px"><input class="in" id="uem" type="email" placeholder="ইমেইল" autocomplete="email"></div>
+      <div class="fg" style="margin-bottom:12px"><input class="in" id="upw" type="password" placeholder="পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)" autocomplete="current-password"></div>
+      <button type="button" class="btn" id="uLoginBtn">লগইন করুন</button>
+      <button type="button" class="btn ghost" id="uSignupBtn">নতুন অ্যাকাউন্ট খুলুন</button>
+      <button type="button" class="back-btn" id="uResetBtn" style="margin:12px auto 0">পাসওয়ার্ড ভুলে গেছেন?</button>
+    </div>
+    <div class="sub" id="gerr" style="color:var(--bad);min-height:1.4em;margin-top:10px"></div>
+  </section>
+
+  <section class="screen" id="home">
+    <h2>প্যাকেজ বেছে নিন</h2><p class="sub">প্যাকেজে ক্লিক করলে সুবিধা ও যোগাযোগের অপশন দেখবেন। কাজ শুরুর আগে প্যাকেজ মূল্যের <b>১০% ডাউন পেমেন্ট</b> দিতে হয়।</p>
+    <div class="grid" id="pkgGrid"></div>
+  </section>
+
+  <section class="screen" id="pkg">
+    <button type="button" class="back-btn" data-go="home"><i class="fa-solid fa-arrow-left"></i> ফিরে যান</button>
+    <h2 id="pkName"></h2><span class="big" id="pkPrice"></span><div class="dpbox" id="pkDown"></div>
+    <ul class="feat" id="pkFeat"></ul>
+    <div class="cbox">
+      <h3><i class="fa-solid fa-comments"></i> আগে ডেভেলপারের সাথে কথা বলুন</h3>
+      <p class="sub" style="margin-bottom:10px">নিচের যেকোনো মাধ্যমে আপনার প্যাকেজের কথা জানান। আমরা কাজ বুঝে নিয়ে ডাউন পেমেন্টের পরিমাণ জানিয়ে দেব।</p>
+      <div class="cgrid" id="pkContact"></div>
+    </div>
+    <button type="button" class="btn" data-go="form">কথা হয়েছে, ডাউন পেমেন্টে যাব <i class="fa-solid fa-arrow-right"></i></button>
+  </section>
+
+  <section class="screen" id="form">
+    <button type="button" class="back-btn" data-go="pkg"><i class="fa-solid fa-arrow-left"></i> ফিরে যান</button>
+    <h2>আপনার তথ্য দিন</h2><p class="sub" id="formSub"></p>
+    <form id="detailsForm" novalidate autocomplete="off">
+      <input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="fg"><label>আপনার নাম</label><input class="in" id="name" placeholder="পুরো নাম লিখুন" maxlength="60"><div class="err">অনুগ্রহ করে নাম লিখুন</div></div>
+      <div class="fg"><label>মোবাইল নম্বর / টেলিগ্রাম ইউজারনেম</label><input class="in" id="contact" placeholder="017xxxxxxxx বা @username" maxlength="40"><div class="err">সঠিক মোবাইল নম্বর বা @username দিন</div></div>
+      <div class="fg"><label>কাজের বিবরণ</label><textarea class="in" id="desc" placeholder="কী চান, কী কী ফিচার থাকবে..." maxlength="1000"></textarea><div class="err">কমপক্ষে ১০ অক্ষরের বিবরণ লিখুন</div></div>
+      <button class="btn" type="submit"><i class="fa-solid fa-lock"></i> ডাউন পেমেন্টে যান</button>
+    </form>
+  </section>
+
+  <section class="screen" id="orders">
+    <h2>আমার অর্ডার</h2><p class="sub">অর্ডারের প্রতিটি ধাপ এখানে দেখা যাবে। পেজটি নিজে থেকেই আপডেট হয়।</p>
+    <div id="ordList"></div>
+    <button type="button" class="btn ghost" id="ordRef"><i class="fa-solid fa-rotate"></i> রিফ্রেশ করুন</button>
+  </section>
+  <footer id="ft"></footer>
+</div>
+<div class="toast" id="toast"></div>
+<div class="np" id="np" role="dialog" aria-live="polite">
+  <h3><i class="fa-solid fa-bell"></i> নোটিফিকেশন চালু করবেন?</h3>
+  <p>অর্ডার কনফার্ম বা ক্যান্সেল হলে, নতুন প্যাকেজ বা নতুন ব্যানার আসলে আপনার মোবাইলে সাথে সাথে জানিয়ে দেব।</p>
+  <div class="row"><button type="button" class="btn" id="npYes">অনুমতি দিন</button><button type="button" class="btn ghost" id="npNo">পরে</button></div>
+</div>
+
+<script>
+(function(){
+try { if (window.top !== window.self) window.top.location = window.self.location; } catch (e) { document.body.innerHTML = ''; return; }
+const CFG = { dev:'devlopersowad', dev2:'primeriyad07', wa1:'8801863062759', wa1Label:'01863-062759', wa2:'8801302140362', wa2Label:'+880 1302-140362', telegram:'WebMakerBdBot', payBot:'PaymentVerifyBdWebMakerBot', payPage:'pay.html', db:'https://bd-web-maker-default-rtdb.firebaseio.com', key:'AIzaSyDmSG4EPJoRHiCJSI58W63PFlHQeZX_XAI', userPollSec:20, pubPollSec:60 };
+
+const BASIC_F = ['WordPress দিয়ে বানানো একটি হাই-টেক ওয়েবসাইট','একমাস যেকোনো সমস্যার সমাধান একদম ফ্রি','একটি ডোমেইন এক বছরের জন্য ফ্রি','এক মাসের জন্য ফ্রি হোস্টিং'];
+const STD_F = ['WordPress দিয়ে বানানো একটি হাই-টেক ওয়েবসাইট','একমাস যেকোনো সমস্যার সমাধান একদম ফ্রি','একটি ডোমেইন এক বছরের জন্য ফ্রি','২ মাসের জন্য ফ্রি হোস্টিং'];
+const PRO_F = ['WordPress দিয়ে বানানো একটি হাই-টেক ওয়েবসাইট','একমাস যেকোনো সমস্যার সমাধান একদম ফ্রি','একটি ডোমেইন এক বছরের জন্য ফ্রি','৪ মাসের জন্য ফ্রি হোস্টিং','১০GB ডাটাবেস একদম ফ্রি'];
+const MULTI_F = ['একাধিক ওয়েবসাইট / অর্ডার সিস্টেম','সিকিউর bKash পেমেন্ট সিস্টেম','সিকিউর Nagad পেমেন্ট সিস্টেম','Binance পেমেন্ট সিস্টেম'];
+const PKGS = {
+  basic:{name:'বেসিক (Basic)', price:300, icon:'fa-seedling', desc:'WordPress-এর হাই-টেক ওয়েবসাইট + ফ্রি ডোমেইন ও হোস্টিং', feats:BASIC_F},
+  standard:{name:'স্ট্যান্ডার্ড (Standard)', price:800, icon:'fa-rocket', desc:'WordPress ওয়েবসাইট + ফ্রি ডোমেইন ও ২ মাসের হোস্টিং', feats:STD_F},
+  bot:{name:'টেলিগ্রাম বট', price:600, icon:'fa-robot', desc:'প্রয়োজন অনুযায়ী কাস্টম টেলিগ্রাম বট', feats:['কাস্টম কমান্ড ও মেনু','অটো রিপ্লাই সিস্টেম']},
+  pro:{name:'প্রফেশনাল (Professional)', price:1850, icon:'fa-server', desc:'WordPress ওয়েবসাইট + ফ্রি ডোমেইন, ৪ মাসের হোস্টিং ও ১০GB ডাটাবেস', feats:PRO_F},
+  apk:{name:'ওয়েব টু APK', price:30, icon:'fa-mobile-screen', desc:'আপনার ওয়েবসাইট থেকে APK — কোনো ওয়াটারমার্ক ছাড়া', feats:['ওয়েবসাইট থেকে অ্যান্ড্রয়েড APK','ওয়াটারমার্ক ছাড়া']},
+  multi:{name:'মাল্টি বিজনেস', price:3000, icon:'fa-layer-group', desc:'একাধিক ওয়েবসাইট/অর্ডার + সিকিউর bKash, Nagad ও Binance পেমেন্ট', feats:MULTI_F, inc:'প্রফেশনাল (Professional) প্যাকেজের সব সুবিধা সহ'},
+  ultra:{name:'আল্টিমেট (Hi-Tech)', price:5000, icon:'fa-bolt', desc:'সবচেয়ে হাই-টেক + স্পেশাল প্রোটেকশন সহ সবকিছু', feats:['স্পেশাল প্রোটেকশন (অ্যান্টি-অ্যাটাক ও অ্যাডভান্সড সিকিউরিটি)','পেমেন্ট সিস্টেম, টেলিগ্রাম বট ও ব্যাকএন্ড একসাথে','কাস্টম হাই-টেক ফিচার ও ইন্টিগ্রেশন','২৪/৭ প্রায়োরিটি সাপোর্ট'], inc:'মাল্টি বিজনেস প্যাকেজের সব সুবিধা সহ'}
+};
+const BASE_KEYS = Object.keys(PKGS);
+const dn = p => Math.ceil(p / 10);
+const S = { pkg:null };
+let cur = 'home', shownAt = 0, U = null, afterLogin = null, ordT = null, pubT = null, ordSt = {}, leaving = false, swReg = null;
+const $ = id => document.getElementById(id);
+const bn = n => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+const taka = n => '৳ ' + bn(n);
+const clean = s => s.replace(/[\u0000-\u0008\u000B-\u001F\u007F<>]/g, '').trim();
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const el = (t, c, x) => { const e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e; };
+const ss = { get(k){ try { return JSON.parse(sessionStorage.getItem(k)); } catch(e){ return null; } }, set(k,v){ try { sessionStorage.setItem(k, JSON.stringify(v)); } catch(e){} }, del(k){ try { sessionStorage.removeItem(k); } catch(e){} } };
+const ls = { get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
+const hash = s => { let h = 5381; s = String(s); for(let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return String(h >>> 0) + '_' + s.length; };
+function toast(t){ const e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('show'), 2800); }
+function lnk(href, icon, text, cls){ const a = el('a', 'btn ' + cls); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.append(el('i', icon), document.createTextNode(' ' + text)); return a; }
+function countUp(e, to, pre){ if(RM){ e.textContent = pre + bn(to); return; } const t0 = performance.now(); (function f(t){ const k = Math.min(1, (t - t0) / 850); e.textContent = pre + bn(Math.round(to * (1 - Math.pow(1 - k, 3)))); if(k < 1) requestAnimationFrame(f); })(t0); }
+
+/* ---------- নোটিফিকেশন সিস্টেম ---------- */
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').then(() => navigator.serviceWorker.ready).then(r => { swReg = r; }).catch(() => {}); }
+async function notify(title, body, tag, hashTo){
+  if(!('Notification' in window) || Notification.permission !== 'granted') return;
+  const opts = { body, tag, lang:'bn', renotify:true, data:{ url:'./' + (hashTo ? '#/' + hashTo : '') } };
+  try { const r = swReg || (navigator.serviceWorker && await navigator.serviceWorker.getRegistration()); if(r){ await r.showNotification(title, opts); return; } } catch(e) {}
+  try { new Notification(title, opts); } catch(e) {}
+}
+function askNotif(){
+  if(!('Notification' in window) || Notification.permission !== 'default' || ss.get('wm_np_no')) return;
+  setTimeout(() => { if(Notification.permission === 'default') $('np').classList.add('show'); }, 1500);
+}
+$('npYes').addEventListener('click', async () => {
+  $('np').classList.remove('show');
+  try { const p = await Notification.requestPermission(); if(p === 'granted'){ toast('নোটিফিকেশন চালু হয়েছে ✓'); notify('Web Maker', 'নোটিফিকেশন সফলভাবে চালু হয়েছে ✓', 'wm-on', ''); } else toast('নোটিফিকেশন বন্ধ আছে। ব্রাউজার সেটিংস থেকে চালু করতে পারবেন।'); } catch(e) {}
+});
+$('npNo').addEventListener('click', () => { ss.set('wm_np_no', 1); $('np').classList.remove('show'); });
+
+/* ---------- প্যাকেজ (ডাটাবেস থেকে নতুন প্যাকেজ) ---------- */
+function drawPkgGrid(){
+  $('pkgGrid').innerHTML = Object.entries(PKGS).map(([k,p], i) => `<button type="button" class="card" style="--i:${i}" data-pkg="${esc(k)}">${k==='pro'?'<span class="tag">জনপ্রিয়</span>':''}${!BASE_KEYS.includes(k)?'<span class="tag">নতুন</span>':''}<div class="ic"><i class="fa-solid ${esc(p.icon)}"></i></div><div class="nm">${esc(p.name)}</div><div class="pr">${taka(p.price)}</div><div class="dp">ডাউন পেমেন্ট ${taka(dn(p.price))}</div><div class="ds">${esc(p.desc)}</div><div class="ct">সুবিধা দেখুন ›</div></button>`).join('');
+  if(cur === 'home') reveal();
+}
+function mergePkgs(remote){
+  const fresh = [];
+  if(!remote || typeof remote !== 'object') return fresh;
+  Object.entries(remote).forEach(([k, p]) => {
+    if(!/^[a-z0-9_]{2,24}$/.test(k) || BASE_KEYS.includes(k) || !p || typeof p !== 'object') return;
+    const price = Math.round(+p.price);
+    if(typeof p.name !== 'string' || !p.name.trim() || !(price >= 1 && price <= 1000000)) return;
+    const feats = Array.isArray(p.feats) ? p.feats.filter(f => typeof f === 'string').slice(0, 20).map(f => clean(f).slice(0, 160)) : [];
+    PKGS[k] = { name:clean(p.name).slice(0, 60), price, icon:/^fa-[a-z0-9-]{2,30}$/.test(p.icon) ? p.icon : 'fa-star', desc:clean(String(p.desc || '')).slice(0, 200), feats, inc:p.inc ? clean(String(p.inc)).slice(0, 160) : '' };
+    fresh.push(k);
+  });
+  return fresh;
+}
+async function checkPackages(){
+  try {
+    const r = await fetch(CFG.db + '/settings/packages.json'); if(!r.ok) return;
+    const remote = await r.json(), keys = mergePkgs(remote), seen = ls.get('wm_pk_seen');
+    if(keys.length) drawPkgGrid();
+    if(!Array.isArray(seen)){ ls.set('wm_pk_seen', keys); return; }
+    const nw = keys.filter(k => !seen.includes(k));
+    if(nw.length){ ls.set('wm_pk_seen', keys); const p = PKGS[nw[0]]; toast('🆕 নতুন প্যাকেজ: ' + p.name); notify('🆕 নতুন প্যাকেজ এসেছে!', nw.length > 1 ? nw.length + 'টি নতুন প্যাকেজ যুক্ত হয়েছে। দেখে নিন।' : p.name + ' — ' + taka(p.price) + ' টাকা। এখনই দেখুন।', 'wm-pkg', 'home'); }
+  } catch(e) {}
+}
+
+/* ---------- ব্যানার ---------- */
+const IMG_OK = u => typeof u === 'string' && u.length < 600000 && (/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+\/=]+$/.test(u) || /^https:\/\/[^\s"'<>]+$/.test(u));
+const LINK_OK = u => typeof u === 'string' && /^https:\/\/[^\s"'<>]+$/.test(u);
+async function loadBanner(){
+  try {
+    const r = await fetch(CFG.db + '/settings/banner.json'); if(!r.ok) return;
+    const b = await r.json(), box = $('banner');
+    if(!b || !b.on || !IMG_OK(b.img)){ box.classList.add('hide'); return; }
+    const sig = hash(b.img + '|' + (b.link || '')), im = $('bannerImg');
+    if(im.dataset.sig !== sig){ im.dataset.sig = sig; im.onerror = () => box.classList.add('hide'); im.src = b.img; }
+    if(LINK_OK(b.link)) box.href = b.link; else box.removeAttribute('href');
+    box.classList.remove('hide');
+    const old = ls.get('wm_bn_sig');
+    if(old !== sig){ ls.set('wm_bn_sig', sig); if(old){ toast('🖼️ নতুন ব্যানার এসেছে!'); notify('🖼️ নতুন ব্যানার!', 'Web Maker-এ নতুন অফার/ব্যানার যুক্ত হয়েছে। দেখে নিন।', 'wm-banner', 'welcome'); } }
+  } catch(e) {}
+}
+function pubCheck(){ loadBanner(); checkPackages(); }
+function startPub(){ if(pubT) return; pubT = setInterval(pubCheck, CFG.pubPollSec * 1000); }
+
+/* ---------- অথ ---------- */
+function saveAuth(){ ss.set('wm_auth', { uid:U.uid, email:U.email, name:U.name, rtok:U.rtok }); }
+async function uTok(){ if(!U) throw new Error('SESSION_EXPIRED'); if(U.tok && Date.now() < U.exp - 60000) return; const r = await fetch('https://securetoken.googleapis.com/v1/token?key=' + CFG.key, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'grant_type=refresh_token&refresh_token=' + encodeURIComponent(U.rtok) }); const d = await r.json(); if(!r.ok) throw new Error('SESSION_EXPIRED'); U.tok = d.id_token; U.rtok = d.refresh_token; U.exp = Date.now() + (+d.expires_in) * 1000; saveAuth(); }
+async function uGet(path){ await uTok(); const r = await fetch(`${CFG.db}/${path}.json?auth=${encodeURIComponent(U.tok)}`); if(!r.ok) throw new Error('DB_' + r.status); return r.json(); }
+function initUser(){ ordSt = ls.get('wm_os_' + U.uid) || {}; loadOrders.last = ''; startPoll(); }
+async function restore(){ const a = ss.get('wm_auth'); if(!a || !a.rtok) return; U = { uid:a.uid, email:a.email, name:a.name, tok:'', rtok:a.rtok, exp:0 }; try { await uTok(); setUbar(); initUser(); } catch(e){ U = null; ss.del('wm_auth'); } }
+
+function go(id){
+  if(!U && id !== 'support'){ if(id !== 'login') afterLogin = id; id = 'login'; } else if(U && id === 'login'){ id = afterLogin || 'welcome'; afterLogin = null; }
+  if(['pkg','form'].includes(id) && !S.pkg) id = 'home';
+  cur = id; document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+  if(id === 'home') reveal();
+  if(id === 'pkg') renderPkg();
+  if(id === 'form'){ shownAt = Date.now(); $('formSub').textContent = `ডাউন পেমেন্ট: ${taka(dn(S.pkg.price))} (${S.pkg.name} — মোট ${taka(S.pkg.price)}-এর ১০%)। পরের ধাপে সিকিউর পেমেন্ট পেজে যাবেন।`; if(!$('name').value && U && U.name) $('name').value = U.name.slice(0, 60); }
+  if(id === 'orders'){ loadOrders(); }
+  document.querySelectorAll('.links button').forEach(b => b.classList.toggle('act', b.dataset.go === (id === 'pkg' || id === 'form' ? 'home' : id)));
+  if(location.hash !== '#/' + id) location.hash = '#/' + id;
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', () => { const h = location.hash.replace(/^#\/?/, ''); if(h && h !== cur) go(['welcome','home','pkg','form','orders','support','login'].includes(h) ? h : 'welcome'); });
+document.addEventListener('click', e => { const g = e.target.closest('[data-go]'); if(g) go(g.dataset.go); });
+
+drawPkgGrid();
+function reveal(){ const cs = document.querySelectorAll('.card'); if(RM) return cs.forEach(c => c.classList.add('in')); cs.forEach(c => c.classList.remove('in')); requestAnimationFrame(() => requestAnimationFrame(() => cs.forEach(c => c.classList.add('in')))); }
+$('pkgGrid').addEventListener('click', e => { const c = e.target.closest('[data-pkg]'); if(!c || !PKGS[c.dataset.pkg]) return; S.pkg = { key:c.dataset.pkg, ...PKGS[c.dataset.pkg] }; go('pkg'); });
+$('pkgGrid').addEventListener('pointermove', e => { if(RM || e.pointerType === 'touch') return; const c = e.target.closest('.card'); if(!c) return; const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; c.style.setProperty('--rx', ((.5 - y) * 8) + 'deg'); c.style.setProperty('--ry', ((x - .5) * 10) + 'deg'); c.style.setProperty('--mx', x * 100 + '%'); c.style.setProperty('--my', y * 100 + '%'); });
+$('pkgGrid').addEventListener('pointerout', e => { const c = e.target.closest('.card'); if(c && !c.contains(e.relatedTarget)){ c.style.removeProperty('--rx'); c.style.removeProperty('--ry'); } });
+
+function renderPkg(){
+  const p = S.pkg;
+  $('pkName').textContent = p.name; countUp($('pkPrice'), p.price, '৳ ');
+  $('pkDown').textContent = `ডাউন পেমেন্ট (১০%): ${taka(dn(p.price))} • বাকি: ${taka(p.price - dn(p.price))} (কাজ শেষে)`;
+  const items = (p.inc ? [`<li class="inh" style="--i:0"><i class="fa-solid fa-plus"></i>${esc(p.inc)}</li>`] : []).concat(p.feats.map((f, i) => `<li style="--i:${i+1}"><i class="fa-solid fa-check"></i>${esc(f)}</li>`));
+  $('pkFeat').innerHTML = items.join('');
+  const q = encodeURIComponent(`আসসালামু আলাইকুম। আমি Web Maker থেকে "${p.name}" প্যাকেজ (${p.price} টাকা) নিতে চাই।\nইমেইল: ${U.email}`);
+  $('pkContact').replaceChildren(
+    lnk(`https://t.me/${encodeURIComponent(CFG.dev)}?text=${q}`, 'fa-brands fa-telegram', 'টেলিগ্রাম: @' + CFG.dev, 'tg'),
+    lnk(`https://t.me/${encodeURIComponent(CFG.dev2)}?text=${q}`, 'fa-brands fa-telegram', 'টেলিগ্রাম: @' + CFG.dev2, 'tg'),
+    lnk(`https://wa.me/${CFG.wa1}?text=${q}`, 'fa-brands fa-whatsapp', 'WhatsApp: ' + CFG.wa1Label, 'wa'),
+    lnk(`https://wa.me/${CFG.wa2}?text=${q}`, 'fa-brands fa-whatsapp', 'WhatsApp: ' + CFG.wa2Label, 'wa'),
+    lnk(`https://t.me/${encodeURIComponent(CFG.telegram)}`, 'fa-solid fa-robot', 'বট: @' + CFG.telegram, 'ghost'));
+}
+
+function check(id, ok, msg){ const g = $(id).closest('.fg'); g.classList.remove('bad'); void g.offsetWidth; g.classList.toggle('bad', !ok); if(!ok && msg) g.querySelector('.err').textContent = msg; return ok; }
+$('detailsForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if($('website').value || leaving) return;
+  if(!U){ go('login'); return; }
+  if(Date.now() - shownAt < 3000){ toast('অনুগ্রহ করে তথ্যগুলো ভালো করে পূরণ করুন'); return; }
+  const name = clean($('name').value), contact = clean($('contact').value), desc = clean($('desc').value);
+  const v1 = check('name', name.length >= 2), v2 = check('contact', /^01[3-9]\d{8}$/.test(contact) || /^@[A-Za-z0-9_]{4,32}$/.test(contact)), v3 = check('desc', desc.length >= 10);
+  if(!(v1 && v2 && v3)) return;
+  ss.set('wm_cart', { pkg:S.pkg.key, name, contact, desc, t:Date.now() }); ss.del('wm_last'); ss.del('wm_final');
+  leaving = true; $('go').classList.add('on'); setTimeout(() => { location.href = CFG.payPage; }, 700);
+});
+
+function setUbar(){ ['uinfo','ulogout'].forEach(i => $(i).classList.toggle('hide', !U)); if(U) $('uinfo').textContent = U.email || U.name; }
+function setUser(d){ U = { uid:d.localId, email:d.email || '', name:d.displayName || '', tok:d.idToken, rtok:d.refreshToken, exp:Date.now() + (+d.expiresIn) * 1000 }; saveAuth(); setUbar(); initUser(); toast('স্বাগতম, ' + (U.name || U.email) + ' ✓'); const t = afterLogin || 'welcome'; afterLogin = null; go(t); }
+async function emailAuth(signup){
+  const err = $('gerr'); err.textContent = '';
+  const email = $('uem').value.trim(), pw = $('upw').value;
+  if(!EMAIL_RE.test(email)){ err.textContent = 'সঠিক ইমেইল দিন'; return; }
+  if(pw.length < 6){ err.textContent = 'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের দিন'; return; }
+  const b = $(signup ? 'uSignupBtn' : 'uLoginBtn'); b.disabled = true;
+  try {
+    const r = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:' + (signup ? 'signUp' : 'signInWithPassword') + '?key=' + CFG.key, { method:'POST', body: JSON.stringify({ email, password: pw, returnSecureToken: true }) });
+    const d = await r.json(); if(!r.ok) throw new Error((d.error && d.error.message) || '');
+    $('upw').value = ''; setUser(d);
+  } catch(e) { const m = String(e.message); err.textContent = m.startsWith('EMAIL_EXISTS') ? 'এই ইমেইল দিয়ে আগেই অ্যাকাউন্ট আছে। লগইন করুন।' : m.startsWith('WEAK_PASSWORD') ? 'পাসওয়ার্ড খুব দুর্বল' : m.startsWith('TOO_MANY') ? 'অনেকবার চেষ্টা হয়েছে, কিছুক্ষণ পর আবার করুন' : (signup ? 'অ্যাকাউন্ট খোলা যায়নি' : 'ইমেইল বা পাসওয়ার্ড ভুল'); }
+  b.disabled = false;
+}
+$('uLoginBtn').addEventListener('click', () => emailAuth(false)); $('uSignupBtn').addEventListener('click', () => emailAuth(true));
+$('upw').addEventListener('keydown', e => { if(e.key === 'Enter') emailAuth(false); });
+$('uResetBtn').addEventListener('click', async () => { const email = $('uem').value.trim(), err = $('gerr'); if(!EMAIL_RE.test(email)){ err.textContent = 'আগে উপরে আপনার ইমেইল লিখুন'; return; } try { await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=' + CFG.key, { method:'POST', body: JSON.stringify({ requestType:'PASSWORD_RESET', email }) }); err.textContent = ''; toast('ইমেইল থাকলে রিসেট লিংক পাঠানো হয়েছে'); } catch(e) { err.textContent = 'পাঠানো যায়নি'; } });
+function uLogout(msg){ U = null; afterLogin = null; ordSt = {}; ['wm_auth','wm_cart','wm_last','wm_final'].forEach(k => ss.del(k)); stopPoll(); S.pkg = null; document.querySelectorAll('.app input.in, .app textarea.in').forEach(i => i.value = ''); setUbar(); go('home'); if(msg) toast(msg); }
+$('ulogout').addEventListener('click', () => uLogout('লগআউট হয়েছে'));
+
+/* ---------- অর্ডার ---------- */
+function stageOf(x){ const st = (x.r && x.r.status) || 'pending'; if(st === 'rejected') return 'rejected'; if(st === 'pending') return 'pending'; if(!(x.dv && x.dv.done)) return 'work'; if(!x.fp) return 'due'; const fs = x.fr && x.fr.status; return fs === 'approved' ? 'done' : fs === 'rejected' ? 'frej' : 'fpend'; }
+const LBL = { pending:'ডাউন পেমেন্ট যাচাই চলছে', work:'কাজ চলছে', rejected:'রিজেক্টেড', due:'কাজ সম্পন্ন — বাকি টাকা বাকি', fpend:'বাকি পেমেন্ট যাচাই চলছে', frej:'বাকি পেমেন্ট রিজেক্টেড', done:'ডেলিভারড' };
+const STEPS = ['ডাউন পেমেন্ট','কাজ চলছে','বাকি পেমেন্ট','ডেলিভারি'], STEPAT = { pending:0, rejected:0, work:1, due:2, fpend:2, frej:2, done:3 };
+const PUSH = {
+  work:['✅ অর্ডার কনফার্ম হয়েছে','আপনার অর্ডার কনফার্ম হয়েছে, কাজ শুরু হচ্ছে।'],
+  rejected:['❌ অর্ডার ক্যান্সেল হয়েছে','আপনার অর্ডার যাচাই করা যায়নি / ক্যান্সেল হয়েছে। বিস্তারিত দেখুন।'],
+  due:['🎉 কাজ সম্পন্ন হয়েছে','আপনার কাজ শেষ! লিংক পেতে বাকি পেমেন্ট করুন।'],
+  frej:['❌ বাকি পেমেন্ট রিজেক্ট','বাকি পেমেন্ট যাচাই করা যায়নি। বিস্তারিত দেখুন।'],
+  done:['📦 অর্ডার ডেলিভারড','সব পেমেন্ট সম্পন্ন! আপনার লিংক এখন "আমার অর্ডার" পেজে।']
+};
+function stepper(s){ const at = STEPAT[s], bad = s === 'rejected' || s === 'frej', box = el('div', 'stp'); STEPS.forEach((n, i) => { const d = el('div', (i <= at ? 'on ' : '') + (i === at ? (bad ? 'bad ' : s === 'done' ? '' : 'cur') : ''), n); d.style.setProperty('--k', i); box.append(d); }); return box; }
+function noteOf(s, o){ const rest = o.price - (o.down || dn(o.price)); return ({
+  pending:'⏳ আপনার ডাউন পেমেন্ট যাচাই চলছে। অ্যাডমিন TrxID মিলিয়ে অ্যাপ্রুভ করলে কাজ শুরু হবে।',
+  work:'✅ ডাউন পেমেন্ট কনফার্ম হয়েছে। আপনার কাজ চলছে। যোগাযোগের জন্য নিচের বাটন ব্যবহার করুন।',
+  rejected:'❌ ডাউন পেমেন্ট যাচাই করা যায়নি (TrxID বা টাকার পরিমাণ মেলেনি)। সঠিক তথ্যসহ পেমেন্ট ভেরিফাই বটে যোগাযোগ করুন।',
+  due:`🎉 আপনার অর্ডারের কাজ সম্পন্ন হয়েছে! তবে ওয়েবসাইট/ফাইলের লিংক পেতে বাকি ${taka(rest)} পরিশোধ করতে হবে। পেমেন্ট অ্যাপ্রুভ হলেই লিংক এখানে দেখতে পাবেন।`,
+  fpend:'⏳ বাকি টাকার পেমেন্ট যাচাই চলছে। অ্যাপ্রুভ হলে এখানেই আপনার লিংক দেখা যাবে।',
+  frej:'❌ বাকি পেমেন্ট যাচাই করা যায়নি। সঠিক তথ্যসহ পেমেন্ট ভেরিফাই বটে যোগাযোগ করুন; অ্যাডমিন রিসেট করলে আবার পেমেন্ট করতে পারবেন।',
+  done:'✅ সব পেমেন্ট সম্পন্ন! নিচে আপনার লিংক:' })[s]; }
+function drawOrders(list){
+  const box = $('ordList');
+  if(!list.length){ box.replaceChildren(el('div', 'sub center', 'এখনো কোনো অর্ডার নেই। প্যাকেজ বেছে প্রথম অর্ডার করুন।')); return; }
+  box.replaceChildren(...list.map((x, i) => {
+    const { id, o } = x, s = x.stage, c = el('div', 'ord ' + s); c.style.setProperty('--i', i);
+    const h = el('div', 'oh'); h.append(el('span', 'oid', id), el('span', 'bd', LBL[s]));
+    const pk = PKGS[o.package] ? PKGS[o.package].name : o.package;
+    c.append(h, stepper(s), el('div', '', `প্যাকেজ: ${pk} • মোট ${taka(o.price)} • ডাউন ${taka(o.down || dn(o.price))} • TrxID: ${o.trx}`), el('div', 'note', noteOf(s, o)));
+    if(s === 'due'){ const b = el('button', 'btn warnb', `বাকি ${taka(o.price - (o.down || dn(o.price)))} পেমেন্ট করুন`); b.type = 'button'; b.onclick = () => { ss.set('wm_final', { id }); ss.del('wm_cart'); ss.del('wm_last'); location.href = CFG.payPage; }; c.append(b); }
+    if(s === 'done'){ const L = x.link; if(LINK_OK(L)) c.append(lnk(L, 'fa-solid fa-link', 'আপনার লিংক খুলুন', ''), el('div', 'note', L)); else c.append(el('div', 'note', L ? String(L) : 'লিংক এখনো যুক্ত হয়নি, অ্যাডমিনের সাথে যোগাযোগ করুন।')); }
+    if(['pending','work','rejected','fpend','frej'].includes(s)){
+      const m = encodeURIComponent('আমার অর্ডার নিয়ে কথা বলতে চাই। আইডি: ' + id), g = el('div', 'cgrid'); g.style.marginTop = '8px';
+      g.append(lnk(`https://t.me/${encodeURIComponent(CFG.dev)}?text=${m}`, 'fa-brands fa-telegram', 'ডেভেলপারকে মেসেজ', 'tg'), lnk(`https://wa.me/${CFG.wa1}?text=${m}`, 'fa-brands fa-whatsapp', 'WhatsApp-এ মেসেজ', 'wa'));
+      if(s !== 'work') g.append(lnk(`https://t.me/${encodeURIComponent(CFG.payBot)}?text=${encodeURIComponent('পেমেন্ট যাচাই নিয়ে সাহায্য দরকার। আইডি: ' + id + ' TrxID: ' + o.trx)}`, 'fa-solid fa-shield-halved', 'পেমেন্ট ভেরিফাই বট', 'ghost'));
+      c.append(g);
+    }
+    return c;
+  }));
+}
+async function loadOrders(silent){
+  if(!U) return; const box = $('ordList');
+  if(!silent) box.replaceChildren(el('div', 'skel'), el('div', 'skel'));
+  try {
+    const ids = Object.keys(await uGet('userOrders/' + U.uid) || {});
+    const rows = await Promise.all(ids.map(async id => { const [o, r, dv, fp, fr] = await Promise.all(['orders/','review/','delivery/','finalpay/','finalreview/'].map(p => uGet(p + id))); const x = { id, o, r, dv, fp, fr, link:null }; x.stage = stageOf(x); if(x.stage === 'done') x.link = await uGet('links/' + id).catch(() => null); return x; }));
+    const list = rows.filter(x => x.o).sort((a, b) => (+b.o.createdAt || 0) - (+a.o.createdAt || 0));
+    list.forEach(x => {
+      const prev = ordSt[x.id];
+      if(prev && prev !== x.stage){
+        toast('🔔 আপনার অর্ডারের স্ট্যাটাস আপডেট হয়েছে!');
+        const m = PUSH[x.stage]; if(m) notify(m[0], m[1] + ' (আইডি: ' + x.id + ')', 'wm-ord-' + x.id, 'orders');
+      }
+      ordSt[x.id] = x.stage;
+    });
+    if(U) ls.set('wm_os_' + U.uid, ordSt);
+    const sig = JSON.stringify(list.map(x => [x.id, x.stage, x.link]));
+    if(silent && sig === loadOrders.last) return; loadOrders.last = sig; drawOrders(list);
+  } catch(e) { if(e.message === 'SESSION_EXPIRED'){ uLogout('সেশন শেষ। আবার লগইন করুন।'); return; } if(!silent) box.replaceChildren(el('div', 'sub center', 'লোড করা যায়নি। রিফ্রেশ করুন।')); }
+}
+function startPoll(){ stopPoll(); ordT = setInterval(() => loadOrders(true), CFG.userPollSec * 1000); loadOrders(true); }
+function stopPoll(){ if(ordT){ clearInterval(ordT); ordT = null; } }
+$('ordRef').addEventListener('click', () => { loadOrders.last = ''; loadOrders(); });
+document.addEventListener('visibilitychange', () => { if(!document.hidden){ pubCheck(); if(U) loadOrders(true); } });
+
+function drawContacts(box){ const q = encodeURIComponent('আসসালামু আলাইকুম, Web Maker থেকে সাহায্য দরকার।'); box.replaceChildren(
+  lnk(`https://t.me/${encodeURIComponent(CFG.dev)}?text=${q}`, 'fa-brands fa-telegram', 'টেলিগ্রাম: @' + CFG.dev, 'tg'), lnk(`https://t.me/${encodeURIComponent(CFG.dev2)}?text=${q}`, 'fa-brands fa-telegram', 'টেলিগ্রাম: @' + CFG.dev2, 'tg'),
+  lnk(`https://wa.me/${CFG.wa1}?text=${q}`, 'fa-brands fa-whatsapp', 'WhatsApp: ' + CFG.wa1Label, 'wa'), lnk(`https://wa.me/${CFG.wa2}?text=${q}`, 'fa-brands fa-whatsapp', 'WhatsApp: ' + CFG.wa2Label, 'wa'),
+  lnk(`https://t.me/${encodeURIComponent(CFG.telegram)}`, 'fa-solid fa-robot', 'অর্ডার বট: @' + CFG.telegram, 'ghost'), lnk(`https://t.me/${encodeURIComponent(CFG.payBot)}`, 'fa-solid fa-shield-halved', 'পেমেন্ট ভেরিফাই বট: @' + CFG.payBot, 'ghost')); }
+function drawFooter(){ const w = el('div', 'ftw'), l = el('div'), r = el('div'), g = el('div', 'cgrid'); l.append(el('h3', '', 'Web Maker'), el('p', 'sub', 'কাস্টম ওয়েবসাইট, টেলিগ্রাম বট ও APK — আপনার চাহিদা অনুযায়ী।')); drawContacts(g); r.append(el('h4', '', 'সাপোর্ট — যেকোনো সময় মেসেজ দিন'), g); w.append(l, r);
+  const b = el('div', 'ftb'); b.append(el('span', '', '© ' + bn(new Date().getFullYear()) + ' Web Maker'), el('span', '', '১০% ডাউন পেমেন্ট • বাকি টাকা কাজ শেষে')); $('ft').replaceChildren(w, b); drawContacts($('supGrid')); }
+const H0 = location.hash.replace(/^#\/?/, '');
+drawFooter(); $('login').classList.add('on'); pubCheck(); startPub(); askNotif();
+restore().then(() => { go(['welcome','home','pkg','form','orders','support','login'].includes(H0) ? H0 : 'welcome'); });
+})();
+</script>
+</body>
+</html>
