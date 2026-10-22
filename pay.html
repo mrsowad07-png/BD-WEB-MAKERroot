@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src data:; connect-src https://bd-web-maker-default-rtdb.firebaseio.com https://securetoken.googleapis.com; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Secure Payment – Web Maker</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030b1f;--card:rgba(8,20,48,.9);--ink:#07142e;--gold:#3b82f6;--gold2:#a8c8ff;--t:#eef4ff;--m:#8fa6cf;--b:#16284d;--bk:#e2136e;--ng:#f7931e;--tg:#0088cc;--ok:#34c38f;--bad:#ff6b7a;--warn:#f5b84b;--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{background:var(--bg);color:var(--t);min-height:100vh;padding:18px;overflow-x:hidden}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);z-index:-1;pointer-events:none;opacity:.32;animation:dr 18s ease-in-out infinite alternate}.o1{width:400px;height:400px;background:#1d4ed8;top:-120px;left:-100px}.o2{width:360px;height:360px;background:#0ea5e9;bottom:-100px;right:-80px;animation-delay:-8s}
+@keyframes dr{to{translate:60px 50px;scale:1.2}}
+.hide{display:none!important}
+.app{max-width:640px;margin:auto;background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--b);border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:pop .9s var(--ease) backwards}@keyframes pop{from{opacity:0;translate:0 36px;scale:.96;filter:blur(8px)}}
+header{padding:22px 20px 18px;text-align:center;border-bottom:1px solid var(--b);position:relative;overflow:hidden}
+header::after{content:"";position:absolute;left:-60%;top:0;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(168,200,255,.09),transparent);skew:-20deg;animation:sw 6s ease-in-out infinite}@keyframes sw{to{left:130%}}
+header h1{font-size:1.5rem;color:var(--gold2)}header h1 i{color:var(--ok);display:inline-block;animation:bt 2.4s ease-in-out infinite}@keyframes bt{50%{scale:1.2}}
+header p{color:var(--m);font-size:.84rem;margin-top:4px}
+.stp{display:flex;justify-content:center;gap:6px;margin-top:14px}.stp span{flex:1;max-width:120px;font-size:.72rem;color:var(--m)}.stp span::before{content:"";display:block;height:4px;border-radius:4px;background:var(--b);margin-bottom:4px;transition:.6s}.stp span.on{color:var(--t)}.stp span.on::before{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.screen{display:none;padding:22px}.screen.on{display:block;animation:fd .55s var(--ease)}@keyframes fd{from{opacity:0;translate:0 18px;filter:blur(6px)}}
+h2{font-size:1.25rem;margin-bottom:8px}.sub{color:var(--m);font-size:.9rem;margin-bottom:14px;line-height:1.6}
+.back-btn{background:none;border:none;color:var(--m);cursor:pointer;font-size:.95rem;margin-bottom:12px;display:block;transition:.2s}.back-btn:hover{color:var(--gold);translate:-3px 0}
+.sum{background:var(--ink);border:1px solid var(--b);border-left:3px solid var(--gold);border-radius:8px;padding:14px 16px;margin-bottom:16px;line-height:1.9;word-break:break-word}.sum span{color:var(--gold2);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.card{background:var(--ink);border:1px solid var(--b);border-radius:8px;padding:24px 14px;text-align:center;cursor:pointer;color:var(--t);transition:.3s;animation:rise .7s var(--ease) backwards}.card:nth-child(2){animation-delay:.12s}@keyframes rise{from{opacity:0;translate:0 30px;scale:.92}}
+.card:hover{translate:0 -5px}.card.bk:hover{border-color:var(--bk);box-shadow:0 14px 34px rgba(226,19,110,.26)}.card.ng:hover{border-color:var(--ng);box-shadow:0 14px 34px rgba(247,147,30,.26)}
+.card .ic{font-size:2.2rem;display:inline-block;transition:.4s}.card:hover .ic{rotate:-10deg;scale:1.15}.card.bk .ic{color:var(--bk)}.card.ng .ic{color:var(--ng)}.card .nm{font-weight:700;font-size:1.15rem;margin-top:6px}.card .ds{font-size:.82rem;color:var(--m)}
+.tring{display:flex;align-items:center;gap:14px;margin-bottom:14px;color:var(--m);font-size:.88rem}.tring svg{width:58px;height:58px;rotate:-90deg;flex:none}.tring circle{fill:none;stroke-width:5}.tring .bg{stroke:var(--b)}.tring .fg{stroke:var(--gold);stroke-linecap:round;stroke-dasharray:157;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+.tring.low .fg{stroke:var(--bad)}.tring b{display:block;font-size:1.4rem;color:var(--gold2)}.tring.low b{color:var(--bad);animation:bl 1s infinite}@keyframes bl{50%{opacity:.4}}
+.warn{background:rgba(255,107,107,.07);border:1px solid var(--bad);border-radius:8px;padding:13px 15px;margin-bottom:14px;font-size:.88rem;line-height:1.7}.warn b{color:var(--bad)}
+.paybox{border:2px dashed var(--b);border-radius:10px;padding:18px;text-align:center;margin-bottom:14px;background:var(--ink)}.paybox.bk{border-color:rgba(226,19,110,.55);animation:glb 2.6s infinite}.paybox.ng{border-color:rgba(247,147,30,.55);animation:gln 2.6s infinite}
+@keyframes glb{50%{box-shadow:0 0 26px rgba(226,19,110,.2)}}@keyframes gln{50%{box-shadow:0 0 26px rgba(247,147,30,.2)}}
+.num{font-size:1.8rem;font-weight:700;letter-spacing:2px;margin:8px 0}.cp{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.copy{background:transparent;border:1px solid var(--b);color:var(--t);border-radius:8px;padding:7px 16px;cursor:pointer;font-size:.9rem;transition:.25s}.copy:hover{border-color:var(--gold)}.copy.done{border-color:var(--ok);color:var(--ok)}
+.steps{margin:0 0 14px 20px;color:var(--m);line-height:1.9;font-size:.9rem}
+label{display:block;margin-bottom:7px;font-weight:600;font-size:.92rem}.fg2{margin-bottom:15px}
+.in{width:100%;padding:12px 14px;background:var(--ink);border:1px solid var(--b);border-radius:8px;color:var(--t);font-size:1rem;outline:none;transition:.25s}.in:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(59,130,246,.12)}.in.good{border-color:var(--ok)}
+.err{color:var(--bad);font-size:.82rem;margin-top:5px;display:none}.fg2.bad .err{display:block}.fg2.bad .in{border-color:var(--bad)}.fg2.bad{animation:shk .4s}@keyframes shk{25%{translate:-6px 0}75%{translate:6px 0}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.an{background:var(--ink);border:1px solid var(--b);border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:.84rem}.an h4{display:flex;justify-content:space-between;margin-bottom:8px;font-size:.88rem}.an h4 b{color:var(--gold2)}
+.mt{height:5px;background:var(--b);border-radius:5px;overflow:hidden;margin-bottom:8px}.mt i{display:block;height:100%;width:0;background:var(--bad);transition:width .5s var(--ease),background .4s}
+.an div.r{padding:2px 0;color:var(--m)}.an div.r.ok{color:var(--ok)}.an div.r.no{color:var(--bad)}.an div.r.wn{color:var(--warn)}
+.btn{width:100%;padding:13px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold2),var(--gold));background-size:200% 100%;color:#fff;font-size:1.02rem;font-weight:700;cursor:pointer;margin-top:8px;display:block;text-decoration:none;text-align:center;position:relative;overflow:hidden;transition:transform .2s,box-shadow .3s,background-position .5s}
+.btn::after{content:"";position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);skew:-20deg;transition:left .6s}
+.btn:hover{background-position:100% 0;box-shadow:0 10px 28px rgba(59,130,246,.28);transform:translateY(-2px)}.btn:hover::after{left:130%}.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed}.btn.tg{background:var(--tg);color:#fff}.btn.ghost{background:transparent;border:1px solid var(--b);color:var(--t)}
+.help{margin-top:16px;display:flex;gap:10px;align-items:center;justify-content:space-between;background:rgba(0,136,204,.1);border:1px solid var(--tg);border-radius:8px;padding:13px;font-size:.85rem;flex-wrap:wrap}.help a{background:var(--tg);color:#fff;border-radius:8px;padding:9px 16px;font-weight:600;text-decoration:none}
+.center{text-align:center}
+.okc{width:92px;height:92px;margin:0 auto 10px;display:block}.okc circle{fill:none;stroke:var(--gold);stroke-width:4;stroke-dasharray:252;stroke-dashoffset:252;animation:dw .8s var(--ease) forwards;transform-origin:center;rotate:-90deg}.okc path{fill:none;stroke:var(--gold2);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:dw .5s .7s var(--ease) forwards}@keyframes dw{to{stroke-dashoffset:0}}
+.cf{position:fixed;top:-12px;width:9px;height:14px;z-index:70;pointer-events:none;animation:fall linear forwards}@keyframes fall{to{translate:var(--dx) 105vh;rotate:var(--r)}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(110px);background:#111827;border:1px solid var(--gold);padding:10px 20px;border-radius:30px;transition:transform .5s cubic-bezier(.34,1.56,.64,1);z-index:95;font-size:.9rem;max-width:92vw;text-align:center}.toast.show{transform:translateX(-50%)}
+#cfm{position:fixed;inset:0;z-index:85;background:rgba(3,11,31,.92);display:none;align-items:center;justify-content:center;padding:18px}#cfm.on{display:flex;animation:fd .3s}
+#cfm .bx{background:var(--card);border:1px solid var(--gold);border-radius:14px;padding:22px;max-width:420px;width:100%;animation:pop .5s var(--ease)}
+#ld{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;align-items:center;justify-content:center}.spin{width:54px;height:54px;border-radius:50%;border:4px solid var(--b);border-top-color:var(--gold);animation:sp .8s linear infinite}@keyframes sp{to{rotate:360deg}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.okc circle,.okc path{stroke-dashoffset:0!important}}
+
+html{scroll-behavior:smooth}
+body{background:radial-gradient(120% 80% at 50% -10%,#0d2a66 0%,#030b1f 58%) fixed}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(79,140,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(79,140,255,.07) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent);mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent);animation:gd 22s linear infinite}
+@keyframes gd{to{background-position:44px 44px}}
+.app{position:relative;border-color:#1b3166;box-shadow:0 30px 90px rgba(0,10,40,.7),0 0 60px rgba(37,99,235,.12)}
+.app::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(120deg,transparent 30%,rgba(130,180,255,.9),transparent 70%) 0 0/300% 100%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:bd 6s linear infinite;pointer-events:none;z-index:2}
+@keyframes bd{to{background-position:-300% 0}}
+.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}.badges span{font-size:.72rem;color:#a8c8ff;border:1px solid #1b3166;background:rgba(59,130,246,.09);padding:3px 11px;border-radius:20px;animation:up .6s var(--ease) backwards}.badges span:nth-child(2){animation-delay:.1s}.badges span:nth-child(3){animation-delay:.2s}
+@keyframes up{from{opacity:0;translate:0 16px}}
+.screen.on>*{animation:up .65s var(--ease) backwards}.screen.on>:nth-child(2){animation-delay:.06s}.screen.on>:nth-child(3){animation-delay:.12s}.screen.on>:nth-child(4){animation-delay:.18s}.screen.on>:nth-child(5){animation-delay:.24s}.screen.on>:nth-child(6){animation-delay:.3s}.screen.on>:nth-child(7){animation-delay:.36s}
+.card{transition:translate .4s cubic-bezier(.34,1.56,.64,1),scale .2s,border-color .3s,box-shadow .3s;background:linear-gradient(160deg,rgba(59,130,246,.07),var(--ink))}.card:active{scale:.97}
+.in{transition:border-color .25s,box-shadow .3s,background .3s}.in:focus{background:#091a3a}
+.btn{transition:transform .3s var(--ease),box-shadow .3s,background-position .6s,opacity .2s}
+.mt i{position:relative;overflow:hidden}.mt i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);translate:-100% 0;animation:ms 2s ease-in-out infinite}@keyframes ms{to{translate:100% 0}}
+.an div.r{animation:up .4s var(--ease) backwards}.an div.r:nth-child(2){animation-delay:.04s}.an div.r:nth-child(3){animation-delay:.08s}.an div.r:nth-child(4){animation-delay:.12s}.an div.r:nth-child(5){animation-delay:.16s}.an div.r:nth-child(6){animation-delay:.2s}.an div.r:nth-child(7){animation-delay:.24s}
+.okc{filter:drop-shadow(0 0 16px rgba(79,140,255,.65));animation:pr 2.6s 1.4s ease-in-out infinite}@keyframes pr{50%{filter:drop-shadow(0 0 30px rgba(130,180,255,.95));scale:1.05}}
+.tring .fg{filter:drop-shadow(0 0 5px rgba(79,140,255,.7))}
+.paybox{background:linear-gradient(160deg,rgba(59,130,246,.06),var(--ink))}
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div>
+<div id="ld"><div class="spin"></div></div>
+<div id="cfm"><div class="bx"><h2>তথ্য মিলিয়ে নিন</h2><p class="sub">জমা দেওয়ার পর এই তথ্য বদলানো যাবে না।</p><div class="sum" id="cfSum"></div><button type="button" class="btn" id="cfYes"><i class="fa-solid fa-lock"></i> ঠিক আছে, জমা দিন</button><button type="button" class="btn ghost" id="cfNo">সংশোধন করব</button></div></div>
+<div class="app">
+  <header><h1><i class="fa-solid fa-shield-halved"></i> সিকিউর পেমেন্ট</h1><p>Web Maker • পেমেন্ট ভেরিফিকেশন পেজ</p><div class="badges"><span>🔒 SSL এনক্রিপ্টেড</span><span>🛡 লগইন সুরক্ষিত</span><span>✔ অ্যাডমিন যাচাই</span></div>
+    <div class="stp" id="stp"><span class="on">১. মেথড</span><span>২. পেমেন্ট</span><span>৩. সম্পন্ন</span></div></header>
+
+  <section class="screen on" id="method">
+    <button type="button" class="back-btn" id="backHome"><i class="fa-solid fa-arrow-left"></i> ফিরে যান</button>
+    <h2 id="mTitle">পেমেন্ট মেথড বেছে নিন</h2>
+    <div class="sum" id="orderSum"></div>
+    <div class="grid">
+      <button type="button" class="card bk" data-pay="bkash"><div class="ic"><i class="fa-solid fa-wallet"></i></div><div class="nm">bKash</div><div class="ds">Send Money</div></button>
+      <button type="button" class="card ng" data-pay="nagad"><div class="ic"><i class="fa-solid fa-wallet"></i></div><div class="nm">Nagad</div><div class="ds">Send Money</div></button>
+    </div>
+  </section>
+
+  <section class="screen" id="pay">
+    <button type="button" class="back-btn" id="backMethod"><i class="fa-solid fa-arrow-left"></i> মেথড বদলান</button>
+    <h2 id="payTitle"></h2>
+    <div class="tring" id="timerBox"><svg viewBox="0 0 58 58"><circle class="bg" cx="29" cy="29" r="25"/><circle class="fg" id="tbar" cx="29" cy="29" r="25"/></svg><div>সেশন শেষ হতে বাকি<b id="tleft">১৫:০০</b></div></div>
+    <div class="warn"><b><i class="fa-solid fa-triangle-exclamation"></i> গুরুত্বপূর্ণ:</b> অবশ্যই <b>Send Money</b> করতে হবে। Cash Out, Payment বা Recharge গ্রহণ হবে না। ঠিক নির্ধারিত পরিমাণ টাকাই পাঠান। <b>ভুয়া নম্বর বা ভুয়া TrxID দিলে অর্ডার বাতিল হবে।</b> অ্যাডমিন নিজে অ্যাপে মিলিয়ে দেখার পরই কনফার্ম হয়।</div>
+    <div class="paybox" id="paybox">
+      <div class="sub" style="margin:0" id="payHint"></div><div class="num" id="payNum"></div>
+      <div class="cp"><button type="button" class="copy" id="copyBtn"><i class="fa-regular fa-copy"></i> নম্বর কপি</button><button type="button" class="copy" id="copyAmt"><i class="fa-regular fa-copy"></i> টাকা কপি</button></div>
+      <p style="margin-top:12px;color:var(--m);font-size:.9rem">পাঠাতে হবে: <b id="payAmt" style="color:var(--gold2);font-size:1.2rem"></b></p>
+    </div>
+    <ol class="steps"><li>অ্যাপ থেকে <b>Send Money</b> বেছে নিন</li><li>উপরের নম্বর ও সঠিক টাকা দিন</li><li>পেমেন্ট শেষে পাওয়া Transaction ID নিচে দিন</li></ol>
+    <form id="payForm" novalidate autocomplete="off">
+      <input class="hp" id="website2" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="fg2"><label>যে নম্বর থেকে টাকা পাঠিয়েছেন</label><input class="in" id="sender" inputmode="numeric" placeholder="01XXXXXXXXX" maxlength="14"><div class="err">সঠিক ১১ ডিজিটের নম্বর দিন</div></div>
+      <div class="fg2"><label>কত টাকা পাঠিয়েছেন</label><input class="in" id="amt" inputmode="numeric" placeholder="ইংরেজি সংখ্যায়" maxlength="5"><div class="err">সঠিক টাকার পরিমাণ লিখুন</div></div>
+      <div class="fg2"><label>Transaction ID (TrxID)</label><input class="in" id="trx" placeholder="যেমন: 9J87X1K8LM" maxlength="14" style="text-transform:uppercase"><div class="err">সঠিক TrxID দিন</div></div>
+      <div class="an" id="an"><h4><span>লাইভ যাচাই</span><b id="anScore">০%</b></h4><div class="mt"><i id="anBar"></i></div><div id="anList"></div></div>
+      <button class="btn" id="payBtn" type="submit"><i class="fa-solid fa-lock"></i> যাচাই করে এগিয়ে যান</button>
+    </form>
+    <div class="help"><div><b><i class="fa-brands fa-telegram"></i> সমস্যা হচ্ছে?</b><br>পেমেন্ট ভেরিফাই বট: @PaymentVerifyBdWebMakerBot</div><a id="helpLink" target="_blank" rel="noopener noreferrer">ভেরিফাই বট</a></div>
+  </section>
+
+  <section class="screen center" id="done">
+    <svg class="okc" viewBox="0 0 92 92" aria-hidden="true"><circle cx="46" cy="46" r="40"/><path d="M28 47l13 13 24-27"/></svg>
+    <h2 style="color:var(--gold2)" id="dTitle"></h2><p class="sub" id="dSub"></p>
+    <div class="sum" id="doneSum" style="text-align:left"></div>
+    <button type="button" class="btn ghost" id="copyId"><i class="fa-regular fa-copy"></i> অর্ডার আইডি কপি করুন</button>
+    <a class="btn tg" id="botDev" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram"></i> ডেভেলপারকে জানান</a>
+    <a class="btn ghost" id="botPay" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-shield-halved"></i> পেমেন্ট ভেরিফাই বট</a>
+    <a class="btn" href="index.html#orders"><i class="fa-solid fa-box-open"></i> আমার অর্ডার দেখুন</a>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+try { if (window.top !== window.self) window.top.location = window.self.location; } catch (e) { document.body.innerHTML = ''; return; }
+const CFG = { number:'01863062759', dev:'devlopersowad', payBot:'PaymentVerifyBdWebMakerBot', db:'https://bd-web-maker-default-rtdb.firebaseio.com', key:'AIzaSyDmSG4EPJoRHiCJSI58W63PFlHQeZX_XAI', sessionMin:15, idleMin:8 };
+const PKGS = { basic:{name:'নরমাল (Basic)',price:300}, standard:{name:'মাঝারি (Standard)',price:800}, bot:{name:'টেলিগ্রাম বট',price:600}, pro:{name:'ফুল ব্যাকএন্ড (Pro)',price:1850}, apk:{name:'ওয়েব টু APK',price:30}, multi:{name:'মাল্টি বিজনেস',price:3000}, ultra:{name:'আল্টিমেট (Hi-Tech)',price:5000} };
+const dn = p => Math.ceil(p / 10);
+const METHODS = { bkash:{label:'bKash', cls:'bk', col:'var(--bk)'}, nagad:{label:'Nagad', cls:'ng', col:'var(--ng)'} };
+const $ = id => document.getElementById(id);
+const bn = n => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+const taka = n => '৳ ' + bn(n);
+const clean = s => s.replace(/[\u0000-\u0008\u000B-\u001F\u007F<>]/g, '').trim();
+const RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const ss = { get(k){ try { return JSON.parse(sessionStorage.getItem(k)); } catch(e){ return null; } }, set(k,v){ try { sessionStorage.setItem(k, JSON.stringify(v)); } catch(e){} }, del(k){ try { sessionStorage.removeItem(k); } catch(e){} } };
+let U, cart, pkg, o, method = null, orderId = '', trxDone = '', deadline = 0, timer = null, busy = false, fails = 0, lockUntil = 0, finalMode = false, payAmt = 0, pending = null, idleT = null;
+const PAYBTN = '<i class="fa-solid fa-lock"></i> যাচাই করে এগিয়ে যান';
+function toast(t){ const e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('show'), 3000); }
+function check(id, ok, msg){ const g = $(id).closest('.fg2'); g.classList.remove('bad'); void g.offsetWidth; g.classList.toggle('bad', !ok); $(id).classList.toggle('good', ok); if(!ok && msg) g.querySelector('.err').textContent = msg; return ok; }
+const bounce = () => location.replace('index.html');
+const tgUrl = (bot, msg) => `https://t.me/${encodeURIComponent(bot)}?text=${encodeURIComponent(msg)}`;
+async function copyTxt(t, btn, ok){ try { await navigator.clipboard.writeText(t); toast(ok); if(btn){ btn.classList.add('done'); setTimeout(() => btn.classList.remove('done'), 1500); } } catch(e) { toast('কপি করা যায়নি, হাতে লিখে নিন'); } }
+function setStep(n){ document.querySelectorAll('#stp span').forEach((s, i) => s.classList.toggle('on', i <= n)); }
+function confetti(){ if(RM) return; const cols = ['#4f8cff','#9cc3ff','#ffffff','#34c38f','#0ea5e9','#6366f1']; for(let i = 0; i < 44; i++){ const c = document.createElement('i'); c.className = 'cf'; c.style.left = Math.random() * 100 + 'vw'; c.style.background = cols[i % 6]; c.style.setProperty('--dx', (Math.random() * 160 - 80) + 'px'); c.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg'); c.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; c.style.animationDelay = (Math.random() * .5) + 's'; document.body.append(c); setTimeout(() => c.remove(), 4500); } }
+function fillSum(box, rows){ box.replaceChildren(); rows.forEach(([k, v]) => { const d = document.createElement('div'), s = document.createElement('span'); s.textContent = v; d.append(k + ': ', s); box.append(d); }); }
+function bumpIdle(){ clearTimeout(idleT); idleT = setTimeout(() => { ['wm_auth','wm_cart','wm_final'].forEach(k => ss.del(k)); toast('নিষ্ক্রিয়তার কারণে সেশন শেষ'); setTimeout(bounce, 1200); }, CFG.idleMin * 60000); }
+['pointerdown','keydown'].forEach(e => document.addEventListener(e, bumpIdle));
+
+/* বিশ্লেষণ ইঞ্জিন: hard = জমা আটকায়, soft = শুধু সতর্কতা */
+function analyze(sender, amtStr, trx){
+  const R = [], add = (hard, ok, okT, noT, w) => R.push({ hard, ok, t: ok ? okT : noT, w });
+  const L = (trx.match(/[A-Z]/g) || []).length, N = (trx.match(/\d/g) || []).length;
+  const ROWS = ['0123456789','ABCDEFGHIJKLMNOPQRSTUVWXYZ','QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
+  const pat = s => { for(let i = 0; i + 4 <= s.length; i++){ const q = s.slice(i, i + 4), r = [...q].reverse().join(''); if(ROWS.some(w => w.includes(q) || w.includes(r))) return true; } return /(.)\1{3}/.test(s) || /^(.{1,4})\1+$/.test(s); };
+  const WORDS = /TEST|FAKE|DEMO|NULL|NONE|TRXID|TXNID|BKASH|NAGAD|PAID|SEND|MONEY|ADMIN|HELLO/;
+  add(true, /^01[3-9]\d{8}$/.test(sender) && sender !== CFG.number, 'প্রেরক নম্বর ঠিক আছে', 'প্রেরক নম্বর সঠিক নয় (১১ ডিজিট, আমাদের নম্বর নয়)', 25);
+  add(true, amtStr !== '' && +amtStr === payAmt, 'টাকার পরিমাণ মিলছে', `ঠিক ${bn(payAmt)} টাকা দিতে হবে`, 25);
+  const re = method === 'bkash' ? /^[A-Z0-9]{10}$/ : /^[A-Z0-9]{8,12}$/;
+  add(true, re.test(trx), method === 'bkash' ? 'bKash TrxID ফরম্যাট ঠিক (১০ অক্ষর)' : 'Nagad TrxID ফরম্যাট ঠিক', method === 'bkash' ? 'bKash TrxID ঠিক ১০ অক্ষর (A–Z, ০–৯)' : 'Nagad TrxID ৮–১২ অক্ষর (A–Z, ০–৯)', 15);
+  add(true, trx.length > 0 && new Set(trx).size >= Math.ceil(trx.length * .5), 'অক্ষরের বৈচিত্র্য ঠিক আছে', 'TrxID-তে একই অক্ষর অনেকবার (ভুয়া মনে হচ্ছে)', 10);
+  add(true, trx.length > 0 && !pat(trx) && !WORDS.test(trx), 'কোনো সাজানো/কীবোর্ড প্যাটার্ন বা নকল শব্দ নেই', 'TrxID ক্রমানুসারে/কীবোর্ড প্যাটার্নে বা নকল শব্দে সাজানো', 10);
+  add(true, trx.length > 0 && L > 0, 'TrxID-তে অক্ষর আছে (শুধু সংখ্যা নয়)', 'শুধু সংখ্যা দিয়ে আসল TrxID হয় না — অক্ষরও থাকে', 10);
+  add(false, L > 0 && N > 0 && sender.length === 11 && !trx.includes(sender.slice(-6)), 'অক্ষর-সংখ্যার মিশ্রণ ঠিক, নম্বর কপি করা নয়', 'অক্ষর-সংখ্যার মিশ্রণ নেই বা নম্বর থেকে কপি মনে হচ্ছে — আবার দেখে নিন', 5);
+  const score = R.reduce((s, r) => s + (r.ok ? r.w : 0), 0);
+  return { R, score, block: R.some(r => r.hard && !r.ok) };
+}
+function drawAn(){
+  const a = analyze(clean($('sender').value), clean($('amt').value), clean($('trx').value).toUpperCase());
+  $('anScore').textContent = bn(a.score) + '% • ' + (a.score >= 90 ? 'নিরাপদ' : a.score >= 65 ? 'মাঝারি' : 'ঝুঁকিপূর্ণ'); const bar = $('anBar'); bar.style.width = a.score + '%'; bar.style.background = a.score >= 90 ? 'var(--ok)' : a.score >= 60 ? 'var(--warn)' : 'var(--bad)';
+  const any = $('sender').value || $('amt').value || $('trx').value;
+  $('anList').replaceChildren(...a.R.map(r => { const d = document.createElement('div'); d.className = 'r ' + (!any ? '' : r.ok ? 'ok' : r.hard ? 'no' : 'wn'); d.textContent = (!any ? '○ ' : r.ok ? '✓ ' : r.hard ? '✕ ' : '! ') + r.t; return d; }));
+  return a;
+}
+
+function countUp(e, to){ if(RM){ e.textContent = taka(to); return; } const t0 = performance.now(); (function f(t){ const k = Math.min(1, (t - t0) / 800); e.textContent = taka(Math.round(to * (1 - Math.pow(1 - k, 3)))); if(k < 1) requestAnimationFrame(f); })(t0); }
+function go(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+  if(id !== 'pay') stopTimer();
+  setStep(id === 'method' ? 0 : id === 'pay' ? 1 : 2);
+  const kind = finalMode ? 'বাকি পেমেন্ট' : 'ডাউন পেমেন্ট (১০%)';
+  const base = [['অর্ডার আইডি', orderId || 'পেমেন্টের পর তৈরি হবে'], ['নাম', cart.name], ['প্যাকেজ', `${pkg.name} (মোট ${taka(pkg.price)})`], ['ইমেইল', U.email || '—'], ['এখন দিতে হবে', `${kind}: ${taka(payAmt)}`]];
+  if(id === 'method'){ $('mTitle').textContent = kind + ' — মেথড বেছে নিন'; fillSum($('orderSum'), base); }
+  if(id === 'pay'){ renderPay(); drawAn(); if(!deadline || Date.now() > deadline) deadline = Date.now() + CFG.sessionMin * 60000; startTimer(); }
+  if(id === 'done'){
+    fillSum($('doneSum'), base.concat(method ? [['পেমেন্ট', METHODS[method].label + ' Send Money']] : [], [['TrxID', trxDone]]));
+    $('dTitle').textContent = finalMode ? 'বাকি পেমেন্ট জমা হয়েছে!' : 'ডাউন পেমেন্ট জমা হয়েছে!';
+    $('dSub').textContent = finalMode ? 'অ্যাডমিন যাচাই করে অ্যাপ্রুভ করলে "আমার অর্ডার" পেজে আপনার লিংক দেখতে পাবেন।' : 'অ্যাডমিন যাচাই করে অ্যাপ্রুভ করলে কাজ শুরু হবে। কাজ শেষ হলে "আমার অর্ডার" পেজে জানতে পারবেন।';
+    $('botDev').href = tgUrl(CFG.dev, `আমার ${finalMode ? 'বাকি' : 'ডাউন'} পেমেন্ট জমা দিয়েছি।\nআইডি: ${orderId}\nনাম: ${cart.name}\nপ্যাকেজ: ${pkg.name}\nTrxID: ${trxDone}`);
+    $('botPay').href = tgUrl(CFG.payBot, `পেমেন্ট ভেরিফিকেশন\nআইডি: ${orderId}\nTrxID: ${trxDone}\nটাকা: ${payAmt}`);
+  }
+  window.scrollTo(0, 0);
+}
+function renderPay(){
+  const m = METHODS[method];
+  $('payTitle').textContent = m.label + ' দিয়ে ' + (finalMode ? 'বাকি পেমেন্ট' : 'ডাউন পেমেন্ট');
+  $('payHint').textContent = m.label + ' (Send Money) নম্বর:'; $('payNum').textContent = CFG.number; $('payNum').style.color = m.col;
+  $('paybox').className = 'paybox ' + m.cls; $('trx').placeholder = method === 'bkash' ? 'যেমন: 9J87X1K8LM (১০ অক্ষর)' : 'যেমন: 75C9TYZ7 (৮–১২ অক্ষর)'; $('trx').maxLength = method === 'bkash' ? 10 : 12; $('trx').value = $('trx').value.slice(0, $('trx').maxLength); countUp($('payAmt'), payAmt);
+  $('helpLink').href = tgUrl(CFG.payBot, `পেমেন্ট যাচাই নিয়ে সাহায্য দরকার।\nনাম: ${cart.name}\nপ্যাকেজ: ${pkg.name}\nমেথড: ${m.label}\nটাকা: ${payAmt}`);
+}
+function startTimer(){
+  stopTimer(); const total = CFG.sessionMin * 60000;
+  const tick = () => { const left = Math.max(0, deadline - Date.now()), m = Math.floor(left / 60000), s = Math.floor(left % 60000 / 1000);
+    $('tleft').textContent = bn(String(m).padStart(2,'0')) + ':' + bn(String(s).padStart(2,'0')); $('tbar').style.strokeDashoffset = 157 * (1 - left / total); $('timerBox').classList.toggle('low', left < 120000);
+    if(left <= 0){ stopTimer(); method = null; deadline = 0; toast('সেশনের সময় শেষ। আবার মেথড বেছে নিন।'); go('method'); } };
+  tick(); timer = setInterval(tick, 1000);
+}
+function stopTimer(){ if(timer){ clearInterval(timer); timer = null; } }
+
+async function tok(){
+  if(U.tok && Date.now() < U.exp - 60000) return;
+  const r = await fetch('https://securetoken.googleapis.com/v1/token?key=' + CFG.key, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'grant_type=refresh_token&refresh_token=' + encodeURIComponent(U.rtok) });
+  const d = await r.json(); if(!r.ok) throw new Error('SESSION_EXPIRED');
+  U.tok = d.id_token; U.rtok = d.refresh_token; U.exp = Date.now() + (+d.expires_in) * 1000; ss.set('wm_auth', { uid:U.uid, email:U.email, name:U.name, rtok:U.rtok });
+}
+async function dbGet(path){ await tok(); const r = await fetch(`${CFG.db}/${path}.json?auth=${encodeURIComponent(U.tok)}`); return r.ok ? r.json() : null; }
+async function patch(body){
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 12000);
+  try { await tok(); const r = await fetch(CFG.db + '/.json?auth=' + encodeURIComponent(U.tok), { method:'PATCH', body: JSON.stringify(body), signal: ctl.signal }); return { ok:r.ok, code:r.status }; }
+  catch(e) { return { ok:false, code: e.message === 'SESSION_EXPIRED' ? -1 : 0 }; }
+  finally { clearTimeout(to); }
+}
+function lockTick(){ const r = Math.ceil((lockUntil - Date.now()) / 1000), b = $('payBtn'); if(r > 0){ b.disabled = true; b.textContent = `অনেকবার ভুল চেষ্টা। ${bn(r)} সেকেন্ড অপেক্ষা করুন`; setTimeout(lockTick, 500); } else { b.disabled = false; b.innerHTML = PAYBTN; } }
+function failOnce(){ if(++fails >= 5){ fails = 0; lockUntil = Date.now() + 30000; lockTick(); } }
+
+/* ধাপ ১: যাচাই → কনফার্ম বক্স */
+$('payForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if(busy || Date.now() < lockUntil || $('website2').value) return;
+  if(Date.now() > deadline){ go('method'); return; }
+  const sender = clean($('sender').value), amtS = clean($('amt').value), trx = clean($('trx').value).toUpperCase(), a = drawAn();
+  const bad = a.R.slice(2).find(r => r.hard && !r.ok);
+  const v1 = check('sender', a.R[0].ok, 'সঠিক ১১ ডিজিটের নম্বর দিন (আমাদের নম্বর নয়)'), v2 = check('amt', a.R[1].ok, `ঠিক ${bn(payAmt)} টাকা লিখুন`), v3 = check('trx', !bad, bad ? bad.t : '');
+  if(!(v1 && v2 && v3)){ failOnce(); return; }
+  pending = { sender, amt:+amtS, trx };
+  fillSum($('cfSum'), [['মেথড', METHODS[method].label + ' Send Money'], ['প্রেরক নম্বর', sender], ['টাকা', taka(pending.amt)], ['TrxID', trx], ['যাচাই স্কোর', bn(a.score) + '%']]);
+  $('cfm').classList.add('on');
+});
+$('cfNo').addEventListener('click', () => { $('cfm').classList.remove('on'); pending = null; });
+/* ধাপ ২: চূড়ান্ত জমা */
+$('cfYes').addEventListener('click', async () => {
+  if(busy || !pending) return; busy = true; const { sender, amt, trx } = pending; pending = null;
+  const yb = $('cfYes'); yb.disabled = true; yb.textContent = 'সিকিউরলি পাঠানো হচ্ছে...';
+  try {
+    if(finalMode){ const [dv, fp] = await Promise.all([dbGet('delivery/' + orderId), dbGet('finalpay/' + orderId)]); if(fp){ toast('এই অর্ডারের বাকি পেমেন্ট আগেই জমা হয়েছে'); setTimeout(() => location.replace('index.html#orders'), 1400); return; } if(!(dv && dv.done)){ toast('কাজ এখনো সম্পন্ন হয়নি'); setTimeout(bounce, 1400); return; } }
+    const id = finalMode ? orderId : 'WM-' + Date.now().toString(36).toUpperCase().slice(-6) + Math.random().toString(36).slice(2,5).toUpperCase();
+    const body = {}; body['trx/' + trx] = id;
+    if(finalMode) body['finalpay/' + id] = { uid:U.uid, amount:amt, method, sender, trx, createdAt:{'.sv':'timestamp'} };
+    else { body['orders/' + id] = { uid:U.uid, email:U.email, name:cart.name, contact:cart.contact, desc:cart.desc, package:cart.pkg, price:pkg.price, down:payAmt, amount:amt, method, sender, trx, status:'pending', createdAt:{'.sv':'timestamp'} }; body['userOrders/' + U.uid + '/' + id] = true; }
+    const res = await patch(body);
+    if(!res.ok){
+      $('cfm').classList.remove('on');
+      if(res.code === -1){ toast('লগইন সেশন শেষ। আবার লগইন করুন।'); setTimeout(bounce, 1200); }
+      else if(res.code === 0) toast('ইন্টারনেট সমস্যা। আবার চেষ্টা করুন।');
+      else if(res.code === 401 || res.code === 403){ check('trx', false, 'এই TrxID আগেই ব্যবহার করা হয়েছে অথবা সংরক্ষণ করা যায়নি'); failOnce(); }
+      else toast('সার্ভার সমস্যা (' + res.code + ')। আবার চেষ্টা করুন।');
+      return;
+    }
+    orderId = id; trxDone = trx; $('cfm').classList.remove('on');
+    ss.set('wm_last', { orderId, trx, method, final:finalMode }); ss.del('wm_cart'); ss.del('wm_final');
+    ['sender','amt','trx'].forEach(i => { $(i).value = ''; }); go('done'); confetti();
+  } finally { busy = false; yb.disabled = false; yb.innerHTML = '<i class="fa-solid fa-lock"></i> ঠিক আছে, জমা দিন'; }
+});
+
+document.querySelectorAll('[data-pay]').forEach(b => b.addEventListener('click', () => { method = b.dataset.pay; deadline = 0; go('pay'); }));
+$('backHome').addEventListener('click', () => { location.href = 'index.html'; });
+$('backMethod').addEventListener('click', () => go('method'));
+$('copyBtn').addEventListener('click', e => copyTxt(CFG.number, e.currentTarget, 'নম্বর কপি হয়েছে ✓'));
+$('copyAmt').addEventListener('click', e => copyTxt(String(payAmt), e.currentTarget, 'টাকার পরিমাণ কপি হয়েছে ✓'));
+$('copyId').addEventListener('click', e => copyTxt(orderId, e.currentTarget, 'অর্ডার আইডি কপি হয়েছে ✓'));
+$('sender').addEventListener('input', e => { let v = e.target.value.replace(/\D/g, ''); if(v.startsWith('880')) v = v.slice(2); e.target.value = v.slice(0, 11); drawAn(); });
+$('amt').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); drawAn(); });
+$('trx').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); drawAn(); });
+
+(async function init(){
+  const a = ss.get('wm_auth'); cart = ss.get('wm_cart'); const fin = ss.get('wm_final'), last = ss.get('wm_last');
+  if(!a || !a.rtok) return bounce();
+  U = { uid:a.uid, email:a.email, name:a.name, tok:'', rtok:a.rtok, exp:0 };
+  try { await tok(); } catch(e){ ss.del('wm_auth'); return bounce(); }
+  bumpIdle();
+  try {
+    if(fin && fin.id){
+      o = await dbGet('orders/' + encodeURIComponent(fin.id)); if(!o || o.uid !== U.uid) return bounce();
+      const [dv, fp] = await Promise.all([dbGet('delivery/' + fin.id), dbGet('finalpay/' + fin.id)]); if(!(dv && dv.done) || fp) return bounce();
+      finalMode = true; orderId = fin.id; cart = o; cart.pkg = o.package; pkg = PKGS[o.package] || { name:o.package, price:o.price };
+      payAmt = o.price - (o.down || dn(o.price)); if(payAmt <= 0) return bounce();
+      $('ld').classList.add('hide'); return go('method');
+    }
+    if(cart){
+      if(!PKGS[cart.pkg] || Date.now() - cart.t > 3600000){ ss.del('wm_cart'); return bounce(); }
+      pkg = PKGS[cart.pkg]; payAmt = dn(pkg.price); $('ld').classList.add('hide'); return go('method');
+    }
+    if(last){
+      o = await dbGet('orders/' + encodeURIComponent(last.orderId)); if(!o) return bounce();
+      orderId = last.orderId; trxDone = last.trx; method = last.method; finalMode = !!last.final; cart = o; cart.pkg = o.package;
+      pkg = PKGS[o.package] || { name:o.package, price:o.price };
+      payAmt = finalMode ? o.price - (o.down || dn(o.price)) : (o.down || dn(o.price));
+      $('ld').classList.add('hide'); return go('done');
+    }
+  } catch(e){ return bounce(); }
+  bounce();
+})();
+})();
+</script>
+</body>
+</html>
